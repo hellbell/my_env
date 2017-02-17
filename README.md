@@ -1,3 +1,3 @@
 # my_env
 
-My environment.
+My vim environment.
