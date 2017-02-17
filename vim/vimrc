@@ -1,0 +1,178 @@
+" Last modification: 08/18/2015
+"
+" Vundle ---------------------------------------------------------------------
+set nocompatible    " be iMproved
+filetype off
+" set the runtime path to include Vundle and initialize
+set rtp+=~/Dropbox/environments/vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle
+Plugin 'VundleVim/Vundle.vim'
+
+" Plugins below --
+Plugin 'surround.vim'
+Plugin 'ctrlp.vim'
+Plugin 'taglist.vim'
+Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+"Plugin 'minibufexpl.vim'   "Just use airline
+Plugin 'scrooloose/nerdtree'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'cpp.vim'
+"Plugin 'Syntastic'
+"Plugin 'Valloric/YouCompleteMe'
+
+" All of your plugins must be added before the following line
+"
+call vundle#end()
+filetype plugin indent on
+" Brief help
+"  :PluginList       - lists configured plugins
+"  :PluginInstall    - installs plugins; append `!' to update
+"  :PluginUpdate     - updates plugins
+"  :PluginSearch foo - searches for foo; append `!' to refresh local cache
+"  :PluginClean      - confirms removal of unused plugins;
+"  :h vundle for more details
+" ----------------------------------------------------------------------------
+
+"
+set noscrollbind
+let mapleader=","
+set cindent
+set autoindent
+set smartindent
+set nowrap
+set nu
+set hlsearch
+set bg=dark
+set ruler
+set visualbell
+set showcmd     " Show (partial) command in status line.
+set showmatch   " Show matching brackets.
+
+set laststatus=2    " Always
+set ttimeoutlen=50
+set encoding=utf-8
+
+" Tabs
+set ts=4
+set sw=4
+set sts=4
+" for python devel
+set expandtab
+
+syntax on
+
+" CTags
+set tags=./tags
+if version >= 500
+func! Sts( )
+	let st = expand("<cword>")
+	exe "sts ".st
+endfunc
+nmap ,st :call Sts( )<cr>
+
+func! Tj( )
+	let st = expand("<cword>")
+	exe "tj ".st
+endfunc
+nmap ,tj :call Tj( )<cr>
+
+"Cscope
+
+"Man page for C language
+func! Man()
+	let sm = expand("<cword>")
+	exe "!man -S 2:3:4:5:6:7:8:9:tcl:n:l:p:o ".sm
+endfunc
+nmap <leader>ma :call Man()<cr><cr>
+
+endif
+
+"""""""""""""""""""""""""""""""""""""
+" Key mappings
+"""""""""""""""""""""""""""""""""""""
+
+map <space>w :w<CR>
+" Buffers
+map <leader>1 :b!1<CR>
+map <leader>2 :b!2<CR>
+map <leader>3 :b!3<CR>
+map <leader>4 :b!4<CR>
+map <leader>5 :b!5<CR>
+map <leader>6 :b!6<CR>
+map <leader>7 :b!7<CR>
+map <leader>8 :b!8<CR>
+map <leader>9 :b!9<CR>
+map <leader>0 :b!0<CR>
+map <leader>x :bn!<CR>
+map <leader>z :bp!<CR>
+map <leader>w :bw!<CR>
+
+" Folding
+map <F1> v]}zf
+map <F2> zo
+autocmd BufWinLeave *.* mkview
+autocmd BufWinEnter *.* silent loadview 
+
+map <F3> :Tlist<cr><C-W><C-W>
+
+"F5 to F8
+map <F5> :NERDTreeToggle<cr>
+
+"F9 to F12
+map <F9> :nohlsearch<cr>
+
+""""""""""""""""""""""""""""""""""""""
+
+" Color
+colorscheme molokai_mine
+set cursorline
+highlight CursorLine ctermfg=NONE ctermbg=54 cterm=bold
+set title
+
+""""""""""""""""""""""""""""""""""""""
+" airline
+""""""""""""""""""""""""""""""""""""""
+let g:airline_left_sep='|'
+let g:airline_right_sep='|'
+let g:airline_theme='molokai'
+"let g:airline_extensions = ['tabline']
+let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#tabline#left_sep=' '
+let g:airline#extensions#tabline#left_alt_sep='|'
+
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+""""""""""""""""""""""""""""""""""""""
+" Syntastic
+""""""""""""""""""""""""""""""""""""""
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+
+func! NewFileC(ext)
+    let fname = expand("%:t:r") . a:ext
+    silent! 0r ~/Dropbox/environments/vim/templates/c_header.txt
+    exe ":1,6s/FILE_NAME/".fname
+    exe ":1,6s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M")
+    exe ":1,6s/CREATE_DATE/".strftime("%c")
+endfunc
+func! NewFilePython()
+    let fname = expand("%:t:r") . ".py"
+    silent! 0r ~/Dropbox/environments/vim/templates/py_header.txt
+    exe ":1,7s/FILE_NAME/".fname
+    exe ":1,7s/CREATE_DATE/".strftime("%c")
+    exe ":1,7s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M")
+endfunc
+
+
+autocmd BufNewFile *.c   call NewFileC(".c")
+autocmd BufNewFile *.cpp call NewFileC(".cpp")
+autocmd BufNewFile *.py  call NewFilePython()
+
+autocmd Bufwritepre,filewritepre *.py exe "normal ma"
+autocmd Bufwritepre,filewritepre *.py exe ":1,7s/Last modified  :.*/Last modified  : " .strftime("%Y-%m-%d %H:%M")
+autocmd bufwritepost,filewritepost *.py exe "normal `a"
