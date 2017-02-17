@@ -5,7 +5,8 @@ set nocompatible    " be iMproved
 filetype off
 " set the runtime path to include Vundle and initialize
 set rtp+=~/Dropbox/environments/vim/bundle/Vundle.vim
-call vundle#begin()
+let path='~/Dropbox/environments/vim/bundle'
+call vundle#begin(path)
 
 " let Vundle manage Vundle
 Plugin 'VundleVim/Vundle.vim'
@@ -167,7 +168,6 @@ func! NewFilePython()
     exe ":1,7s/CREATE_DATE/".strftime("%c")
     exe ":1,7s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M")
 endfunc
-
 
 autocmd BufNewFile *.c   call NewFileC(".c")
 autocmd BufNewFile *.cpp call NewFileC(".cpp")
