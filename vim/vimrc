@@ -169,16 +169,21 @@ func! NewFilePython()
     exe ":1,7s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M")
 endfunc
 
+func! UpdateLastModified()
+    if (&ft=='py')
+        exe ":1,7s/Last modified  :.*/Last modified  : " .strftime("%Y-%m-%d %H:%M:%S")
+    endif
+    if (&ft=='c' || &ft=='C' || &ft=='cpp' || &ft=='h')
+        exe ":1,7s/@date.*/@date    " .strftime("%Y-%m-%d %H:%M:%S")
+    endif
+    exe ":wq!"
+endfunc
+
+nmap <leader>q :call UpdateLastModified()<cr><cr>
+
 autocmd BufNewFile *.c   call NewFileC(".c")
 autocmd BufNewFile *.C   call NewFileC(".C")
 autocmd BufNewFile *.cpp call NewFileC(".cpp")
 autocmd BufNewFile *.h   call NewFileC(".h")
 autocmd BufNewFile *.py  call NewFilePython()
 
-autocmd Bufwritepre,filewritepre *.c,*.C,*.cpp,*.h exe "normal ma"
-autocmd Bufwritepre,filewritepre *.c,*.C,*.cpp,*.h exe ":1,7s/@date.*/@date    " .strftime("%Y-%m-%d %H:%M:%S")
-autocmd bufwritepost,filewritepost *.c,*.C,*.cpp,*.h exe "normal `a"
-
-autocmd Bufwritepre,filewritepre *.py exe "normal ma"
-autocmd Bufwritepre,filewritepre *.py exe ":1,7s/Last modified  :.*/Last modified  : " .strftime("%Y-%m-%d %H:%M:%S")
-autocmd bufwritepost,filewritepost *.py exe "normal `a"
