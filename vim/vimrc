@@ -4,8 +4,8 @@
 set nocompatible    " be iMproved
 filetype off
 " set the runtime path to include Vundle and initialize
-set rtp+=~/Dropbox/environments/vim/bundle/Vundle.vim
-let path='~/Dropbox/environments/vim/bundle'
+set rtp+=~/Dropbox/github/my_env/vim/bundle/Vundle.vim
+let path='~/Dropbox/github/my_env/vim/bundle'
 call vundle#begin(path)
 
 " let Vundle manage Vundle
@@ -156,23 +156,29 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 
 func! NewFileC(ext)
     let fname = expand("%:t:r") . a:ext
-    silent! 0r ~/Dropbox/environments/vim/templates/c_header.txt
+    silent! 0r ~/Dropbox/github/my_env/vim/templates/c_header.txt
     exe ":1,6s/FILE_NAME/".fname
-    exe ":1,6s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M")
+    exe ":1,6s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
     exe ":1,6s/CREATE_DATE/".strftime("%c")
 endfunc
 func! NewFilePython()
     let fname = expand("%:t:r") . ".py"
-    silent! 0r ~/Dropbox/environments/vim/templates/py_header.txt
+    silent! 0r ~/Dropbox/github/my_env/vim/templates/py_header.txt
     exe ":1,7s/FILE_NAME/".fname
     exe ":1,7s/CREATE_DATE/".strftime("%c")
     exe ":1,7s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M")
 endfunc
 
 autocmd BufNewFile *.c   call NewFileC(".c")
+autocmd BufNewFile *.C   call NewFileC(".C")
 autocmd BufNewFile *.cpp call NewFileC(".cpp")
+autocmd BufNewFile *.h   call NewFileC(".h")
 autocmd BufNewFile *.py  call NewFilePython()
 
+autocmd Bufwritepre,filewritepre *.c,*.C,*.cpp,*.h exe "normal ma"
+autocmd Bufwritepre,filewritepre *.c,*.C,*.cpp,*.h exe ":1,7s/@date.*/@date    " .strftime("%Y-%m-%d %H:%M:%S")
+autocmd bufwritepost,filewritepost *.c,*.C,*.cpp,*.h exe "normal `a"
+
 autocmd Bufwritepre,filewritepre *.py exe "normal ma"
-autocmd Bufwritepre,filewritepre *.py exe ":1,7s/Last modified  :.*/Last modified  : " .strftime("%Y-%m-%d %H:%M")
+autocmd Bufwritepre,filewritepre *.py exe ":1,7s/Last modified  :.*/Last modified  : " .strftime("%Y-%m-%d %H:%M:%S")
 autocmd bufwritepost,filewritepost *.py exe "normal `a"
