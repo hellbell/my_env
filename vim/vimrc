@@ -176,10 +176,15 @@ func! UpdateLastModified()
     if (&ft=='c' || &ft=='C' || &ft=='cpp' || &ft=='h')
         exe ":1,7s/@date.*/@date    " .strftime("%Y-%m-%d %H:%M:%S")
     endif
+endfunc
+
+func! UpdateLastModifiedAndQuit()
+    UpdateLastModified()
     exe ":wq!"
 endfunc
 
-nmap <leader>q :call UpdateLastModified()<cr><cr>
+nmap <leader>q :call UpdateLastModifiedAndQuit()<cr><cr>
+nmap <leader>ulm :call UpdateLastModified()<cr><cr>
 
 autocmd BufNewFile *.c   call NewFileC(".c")
 autocmd BufNewFile *.C   call NewFileC(".C")
