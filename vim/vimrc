@@ -179,7 +179,7 @@ func! UpdateLastModified()
 endfunc
 
 func! UpdateLastModifiedAndQuit()
-    UpdateLastModified()
+    exe UpdateLastModified()
     exe ":wq!"
 endfunc
 
