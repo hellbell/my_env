@@ -1,5 +1,4 @@
 " Last modification: 08/18/2015
-"
 " Vundle ---------------------------------------------------------------------
 set nocompatible    " be iMproved
 filetype off
@@ -166,15 +165,15 @@ func! NewFilePython()
     silent! 0r ~/Dropbox/github/my_env/vim/templates/py_header.txt
     exe ":1,7s/FILE_NAME/".fname
     exe ":1,7s/CREATE_DATE/".strftime("%c")
-    exe ":1,7s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M")
+    exe ":1,7s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
 endfunc
 
 func! UpdateLastModified()
-    if (&ft=='py')
-        exe ":1,7s/Last modified  :.*/Last modified  : " .strftime("%Y-%m-%d %H:%M:%S")
-    endif
     if (&ft=='c' || &ft=='C' || &ft=='cpp' || &ft=='h')
         exe ":1,7s/@date.*/@date    " .strftime("%Y-%m-%d %H:%M:%S")
+    endif
+    if (expand("%:e") =='py')
+        exe ":1,7s/Last modified  :.*/Last modified  : " .strftime("%Y-%m-%d %H:%M:%S")
     endif
 endfunc
 
@@ -191,4 +190,7 @@ autocmd BufNewFile *.C   call NewFileC(".C")
 autocmd BufNewFile *.cpp call NewFileC(".cpp")
 autocmd BufNewFile *.h   call NewFileC(".h")
 autocmd BufNewFile *.py  call NewFilePython()
+
+
+
 
