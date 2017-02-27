@@ -127,9 +127,9 @@ map <F9> :nohlsearch<cr>
 """"""""""""""""""""""""""""""""""""""
 
 " Color
-colorscheme molokai_mine
+colorscheme jellybeans
 set cursorline
-highlight CursorLine ctermfg=NONE ctermbg=54 cterm=bold
+highlight CursorLine ctermfg=NONE ctermbg=53 cterm=bold
 set title
 
 """"""""""""""""""""""""""""""""""""""
