@@ -192,5 +192,5 @@ autocmd BufNewFile *.h   call NewFileC(".h")
 autocmd BufNewFile *.py  call NewFilePython()
 
 
-
-
+" Parenthesis highlighting
+autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | hi parens ctermfg=11
