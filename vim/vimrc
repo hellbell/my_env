@@ -94,21 +94,33 @@ endif
 " Key mappings
 """""""""""""""""""""""""""""""""""""
 
-map <space>w :w<CR>
+map <space>w :w<cr>
 " Buffers
-map <leader>1 :b!1<CR>
-map <leader>2 :b!2<CR>
-map <leader>3 :b!3<CR>
-map <leader>4 :b!4<CR>
-map <leader>5 :b!5<CR>
-map <leader>6 :b!6<CR>
-map <leader>7 :b!7<CR>
-map <leader>8 :b!8<CR>
-map <leader>9 :b!9<CR>
-map <leader>0 :b!0<CR>
-map <leader>x :bn!<CR>
-map <leader>z :bp!<CR>
-map <leader>w :bw!<CR>
+map <leader>0 :b!0<cr>
+map <leader>1 :b!1<cr>
+map <leader>2 :b!2<cr>
+map <leader>3 :b!3<cr>
+map <leader>4 :b!4<cr>
+map <leader>5 :b!5<cr>
+map <leader>6 :b!6<cr>
+map <leader>7 :b!7<cr>
+map <leader>8 :b!8<cr>
+map <leader>9 :b!9<cr>
+map <leader>10 :b!10<cr>
+map <leader>11 :b!11<cr>
+map <leader>12 :b!12<cr>
+map <leader>13 :b!13<cr>
+map <leader>14 :b!14<cr>
+map <leader>15 :b!15<cr>
+map <leader>16 :b!16<cr>
+map <leader>17 :b!17<cr>
+map <leader>18 :b!18<cr>
+map <leader>19 :b!19<cr>
+map <leader>x :bn!<cr>
+map <leader>z :bp!<cr>
+map <leader>w :bw!<cr>
+map <leader>make :!make<cr>
+map <leader>latex :!pdflatex "%:p"<cr>
 
 " Folding
 map <F1> v]}zf
