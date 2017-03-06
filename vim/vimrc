@@ -1,5 +1,13 @@
-" Last modification: 08/18/2015
-" Vundle ---------------------------------------------------------------------
+""""""""""""""""""""""""""""""""""""""
+" Author: Jinwook Jung
+" Email : jinwookjungs@gmail.com
+" Last modification: 03/17/2017
+""""""""""""""""""""""""""""""""""""""
+
+
+""""""""""""""""""""""""""""""""""""""
+" Vundle
+""""""""""""""""""""""""""""""""""""""
 set nocompatible    " be iMproved
 filetype off
 " set the runtime path to include Vundle and initialize
@@ -34,9 +42,13 @@ filetype plugin indent on
 "  :PluginSearch foo - searches for foo; append `!' to refresh local cache
 "  :PluginClean      - confirms removal of unused plugins;
 "  :h vundle for more details
-" ----------------------------------------------------------------------------
+""""""""""""""""""""""""""""""""""""""
 
-"
+""""""""""""""""""""""""""""""""""""""
+" General settings
+""""""""""""""""""""""""""""""""""""""
+set autoread        " Update automatically when a file is changed outside
+set scrolloff=4     " Keep the cursor away from top/bottom
 set noscrollbind
 let mapleader=","
 set cindent
@@ -46,14 +58,15 @@ set nowrap
 set nu
 set hlsearch
 set bg=dark
-set ruler
+set ruler       " Show current position
 set visualbell
 set showcmd     " Show (partial) command in status line.
 set showmatch   " Show matching brackets.
 
-set laststatus=2    " Always
+set laststatus=2    " Always show a status bar
 set ttimeoutlen=50
 set encoding=utf-8
+set history=700
 
 " Tabs
 set ts=4
@@ -136,13 +149,17 @@ map <F5> :NERDTreeToggle<cr>
 "F9 to F12
 map <F9> :nohlsearch<cr>
 
-""""""""""""""""""""""""""""""""""""""
 
+""""""""""""""""""""""""""""""""""""""
 " Color
+""""""""""""""""""""""""""""""""""""""
 colorscheme jellybeans
 set cursorline
 highlight CursorLine ctermfg=NONE ctermbg=53 cterm=bold
 set title
+" Parenthesis highlighting
+autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | hi parens ctermfg=11
+
 
 """"""""""""""""""""""""""""""""""""""
 " airline
@@ -157,6 +174,7 @@ let g:airline#extensions#tabline#left_alt_sep='|'
 
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
+
 """"""""""""""""""""""""""""""""""""""
 " Syntastic
 """"""""""""""""""""""""""""""""""""""
@@ -165,6 +183,10 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 "let g:syntastic_check_on_open = 1
 "let g:syntastic_check_on_wq = 0
 
+
+""""""""""""""""""""""""""""""""""""""
+" New file header
+""""""""""""""""""""""""""""""""""""""
 func! NewFileC(ext)
     let fname = expand("%:t:r") . a:ext
     silent! 0r ~/Dropbox/github/my_env/vim/templates/c_header.txt
@@ -203,6 +225,3 @@ autocmd BufNewFile *.cpp call NewFileC(".cpp")
 autocmd BufNewFile *.h   call NewFileC(".h")
 autocmd BufNewFile *.py  call NewFilePython()
 
-
-" Parenthesis highlighting
-autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | hi parens ctermfg=11
