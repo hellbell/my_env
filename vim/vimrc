@@ -24,7 +24,6 @@ Plugin 'ctrlp.vim'
 Plugin 'taglist.vim'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-"Plugin 'minibufexpl.vim'   "Just use airline
 Plugin 'scrooloose/nerdtree'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'cpp.vim'
