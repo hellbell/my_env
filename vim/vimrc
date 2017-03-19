@@ -11,8 +11,8 @@
 set nocompatible    " be iMproved
 filetype off
 " set the runtime path to include Vundle and initialize
-set rtp+=~/Dropbox/github/my_env/vim/bundle/Vundle.vim
-let path='~/Dropbox/github/my_env/vim/bundle'
+set rtp+=/home/jwjung/workspace/my_env/vim/bundle/Vundle.vim
+let path='/home/jwjung/workspace/my_env/vim/bundle'
 call vundle#begin(path)
 
 " let Vundle manage Vundle
@@ -188,14 +188,14 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 """"""""""""""""""""""""""""""""""""""
 func! NewFileC(ext)
     let fname = expand("%:t:r") . a:ext
-    silent! 0r ~/Dropbox/github/my_env/vim/templates/c_header.txt
+    silent! 0r ~/workspace/my_env/vim/templates/c_header.txt
     exe ":1,6s/FILE_NAME/".fname
     exe ":1,6s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
     exe ":1,6s/CREATE_DATE/".strftime("%c")
 endfunc
 func! NewFilePython()
     let fname = expand("%:t:r") . ".py"
-    silent! 0r ~/Dropbox/github/my_env/vim/templates/py_header.txt
+    silent! 0r ~/workspace/my_env/vim/templates/py_header.txt
     exe ":1,7s/FILE_NAME/".fname
     exe ":1,7s/CREATE_DATE/".strftime("%c")
     exe ":1,7s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
