@@ -3,7 +3,7 @@
 " Email : jinwookjungs@gmail.com
 " Last modification: 03/17/2017
 """"""""""""""""""""""""""""""""""""""
-
+let vundle_path = expand('~/Dropbox/github/my_env/vim/bundle/Vundle.vim')
 
 """"""""""""""""""""""""""""""""""""""
 " Vundle
@@ -11,9 +11,8 @@
 set nocompatible    " be iMproved
 filetype off
 " set the runtime path to include Vundle and initialize
-set rtp+=/home/jwjung/workspace/my_env/vim/bundle/Vundle.vim
-let path='/home/jwjung/workspace/my_env/vim/bundle'
-call vundle#begin(path)
+exe 'set rtp+='.vundle_path
+call vundle#begin()
 
 " let Vundle manage Vundle
 Plugin 'VundleVim/Vundle.vim'
@@ -193,6 +192,7 @@ func! NewFileC(ext)
     exe ":1,6s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
     exe ":1,6s/CREATE_DATE/".strftime("%c")
 endfunc
+
 func! NewFilePython()
     let fname = expand("%:t:r") . ".py"
     silent! 0r ~/workspace/my_env/vim/templates/py_header.txt
