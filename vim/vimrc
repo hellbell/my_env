@@ -58,8 +58,10 @@ set hlsearch
 set bg=dark
 set ruler       " Show current position
 set visualbell
+set t_vb=
 set showcmd     " Show (partial) command in status line.
 set showmatch   " Show matching brackets.
+set backspace=indent,sol,start
 
 set laststatus=2    " Always show a status bar
 set ttimeoutlen=50
@@ -187,7 +189,7 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 """"""""""""""""""""""""""""""""""""""
 func! NewFileC(ext)
     let fname = expand("%:t:r") . a:ext
-    silent! 0r ~/workspace/my_env/vim/templates/c_header.txt
+    silent! 0r ~/Dropbox/github/my_env/vim/templates/c_header.txt
     exe ":1,6s/FILE_NAME/".fname
     exe ":1,6s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
     exe ":1,6s/CREATE_DATE/".strftime("%c")
@@ -195,7 +197,7 @@ endfunc
 
 func! NewFilePython()
     let fname = expand("%:t:r") . ".py"
-    silent! 0r ~/workspace/my_env/vim/templates/py_header.txt
+    silent! 0r ~/Dropbox/github/my_env/vim/templates/py_header.txt
     exe ":1,7s/FILE_NAME/".fname
     exe ":1,7s/CREATE_DATE/".strftime("%c")
     exe ":1,7s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
@@ -219,8 +221,23 @@ nmap <leader>q :call UpdateLastModifiedAndQuit()<cr><cr>
 nmap <leader>ulm :call UpdateLastModified()<cr><cr>
 
 autocmd BufNewFile *.c   call NewFileC(".c")
-autocmd BufNewFile *.C   call NewFileC(".C")
 autocmd BufNewFile *.cpp call NewFileC(".cpp")
 autocmd BufNewFile *.h   call NewFileC(".h")
 autocmd BufNewFile *.py  call NewFilePython()
 
+"""" YCM
+"let g:ycm_global_ycm_extra_conf = './.ycm_extra_conf.py'
+"let g:ycm_confirm_extra_conf = 0
+"let g:ycm_key_list_select_completion = ['<TAB>']
+"let g:ycm_key_list_previous_completion = ['<S-TAB>']
+"let g:ycm_autoclose_preview_window_after_completion = 1
+"let g:ycm_error_symbol = '>'
+"let g:ycm_warning_symbol = '*'
+"let g:ycm_key_invoke_completion = '<C-1>'
+"
+"nnoremap <leader>g :YcmCompleter GoTo<cr>
+"" nnoremap gg :YcmCompleter GoToImprecise
+"nnoremap <leader>d :YcmCompleter GoToDeclaration<cr>
+"nnoremap <leader>t :YcmCompleter GetType<cr>
+"nnoremap <leader>p :YcmCompleter GetParent<cr>
+"nnoremap <leader>c :YcmForceCompileAndDiagnostics<CR>
