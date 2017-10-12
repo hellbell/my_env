@@ -1,9 +1,15 @@
 """"""""""""""""""""""""""""""""""""""
 " Author: Jinwook Jung
 " Email : jinwookjungs@gmail.com
-" Last modification: 03/17/2017
+" Last modification: Oct 13, 2017
+"
+" Change your ~/.vimrc as follows:
+"   set runtimepath+=<path to this repository>
+"   source <path to this repository>/vimrc
 """"""""""""""""""""""""""""""""""""""
-let vundle_path = expand('~/github/my_env/vim/bundle/Vundle.vim')
+
+let vim_file_path = expand('~/Dropbox/github/my_env/vim/')
+let vundle_path = expand(vim_file_path . '/bundle/Vundle.vim')
 
 """"""""""""""""""""""""""""""""""""""
 " Vundle
@@ -183,13 +189,17 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 "let g:syntastic_check_on_open = 1
 "let g:syntastic_check_on_wq = 0
 
-
 """"""""""""""""""""""""""""""""""""""
 " New file header
 """"""""""""""""""""""""""""""""""""""
+let template_dir = expand(vim_file_path . 'templates/')
+let $C_HEADER_TXT = expand(template_dir . 'c_header.txt')
+let $PY_HEADER_TXT = expand(template_dir . 'py_header.txt')
+let $DOXYGEN_CPP_TXT = expand(template_dir . 'doxygen_cpp.txt')
+
 func! NewFileC(ext)
     let fname = expand("%:t:r") . a:ext
-    silent! 0r ~/github/my_env/vim/templates/c_header.txt
+    silent! 0r $C_HEADER_TXT
     exe ":1,6s/FILE_NAME/".fname
     exe ":1,6s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
     exe ":1,6s/CREATE_DATE/".strftime("%c")
@@ -197,7 +207,7 @@ endfunc
 
 func! NewFilePython()
     let fname = expand("%:t:r") . ".py"
-    silent! 0r ~/github/my_env/vim/templates/py_header.txt
+    silent! 0r $PY_HEADER_TXT
     exe ":1,7s/FILE_NAME/".fname
     exe ":1,7s/CREATE_DATE/".strftime("%c")
     exe ":1,7s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
@@ -205,14 +215,14 @@ endfunc
 
 "" Doxygen Related
 func! InsertDoxygenClass()
-    silent! r! sed -n 1,7p ~/github/my_env/vim/templates/doxygen_cpp.txt
+    silent! r! sed -n 1,7p $DOXYGEN_CPP_TXT
     exe ":-6"
     exe ":,+6s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
     exe ":+1"
 endfunc
 
 func! InsertDoxygenFunction()
-    silent! r! sed -n 8,12p ~/github/my_env/vim/templates/doxygen_cpp.txt
+    silent! r! sed -n 8,12p $DOXYGEN_CPP_TXT
     exe ":-5"
     exe ":,+5s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
 endfunc
@@ -226,6 +236,10 @@ func! UpdateLastModified()
     endif
 endfunc
 
+func! UpdateDoxygenDate()
+    exe ":,s/@date.*/@date   " .strftime("%Y-%m-%d %H:%M:%S")
+endfunc
+
 func! UpdateLastModifiedAndQuit()
     exe UpdateLastModified()
     exe ":wq!"
@@ -235,6 +249,7 @@ nmap <leader>q :call UpdateLastModifiedAndQuit()<cr><cr>
 nmap <leader>ulm :call UpdateLastModified()<cr><cr>
 nmap <leader>dc :call InsertDoxygenClass()<cr><cr>
 nmap <leader>df :call InsertDoxygenFunction()<cr><cr>
+nmap <leader>ufd :call UpdateDoxygenDate()<cr><cr>
 
 autocmd BufNewFile *.c   call NewFileC(".c")
 autocmd BufNewFile *.cpp call NewFileC(".cpp")
