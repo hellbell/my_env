@@ -1,6 +1,6 @@
 /**
  * @file    FILE_NAME
- * @author  Jinwook Jung (jinwookjungs@gmail.com)
+ * @author  Jinwook Jung (jinwookjung@kaist.ac.kr)
  * @date    LAST_MODIFIED
  *
  * Created on CREATE_DATE.

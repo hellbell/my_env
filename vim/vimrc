@@ -3,7 +3,7 @@
 " Email : jinwookjungs@gmail.com
 " Last modification: 03/17/2017
 """"""""""""""""""""""""""""""""""""""
-let vundle_path = expand('~/Dropbox/github/my_env/vim/bundle/Vundle.vim')
+let vundle_path = expand('~/github/my_env/vim/bundle/Vundle.vim')
 
 """"""""""""""""""""""""""""""""""""""
 " Vundle
@@ -26,8 +26,8 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdtree'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'cpp.vim'
-"Plugin 'Syntastic'
-"Plugin 'Valloric/YouCompleteMe'
+Plugin 'snipMate'
+Plugin 'Valloric/YouCompleteMe'
 
 " All of your plugins must be added before the following line
 "
@@ -78,7 +78,7 @@ set expandtab
 syntax on
 
 " CTags
-set tags=./tags
+set tags=~/git/power_baum_2.0/tags
 if version >= 500
 func! Sts( )
 	let st = expand("<cword>")
@@ -119,16 +119,16 @@ map <leader>6 :b!6<cr>
 map <leader>7 :b!7<cr>
 map <leader>8 :b!8<cr>
 map <leader>9 :b!9<cr>
-map <leader>10 :b!10<cr>
-map <leader>11 :b!11<cr>
-map <leader>12 :b!12<cr>
-map <leader>13 :b!13<cr>
-map <leader>14 :b!14<cr>
-map <leader>15 :b!15<cr>
-map <leader>16 :b!16<cr>
-map <leader>17 :b!17<cr>
-map <leader>18 :b!18<cr>
-map <leader>19 :b!19<cr>
+map <leader><leader>10 :b!10<cr>
+map <leader><leader>11 :b!11<cr>
+map <leader><leader>12 :b!12<cr>
+map <leader><leader>13 :b!13<cr>
+map <leader><leader>14 :b!14<cr>
+map <leader><leader>15 :b!15<cr>
+map <leader><leader>16 :b!16<cr>
+map <leader><leader>17 :b!17<cr>
+map <leader><leader>18 :b!18<cr>
+map <leader><leader>19 :b!19<cr>
 map <leader>x :bn!<cr>
 map <leader>z :bp!<cr>
 map <leader>w :bw!<cr>
@@ -153,7 +153,7 @@ map <F9> :nohlsearch<cr>
 """"""""""""""""""""""""""""""""""""""
 " Color
 """"""""""""""""""""""""""""""""""""""
-colorscheme jellybeans
+colorscheme jellybeans_modified
 set cursorline
 highlight CursorLine ctermfg=NONE ctermbg=53 cterm=bold
 set title
@@ -189,7 +189,7 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 """"""""""""""""""""""""""""""""""""""
 func! NewFileC(ext)
     let fname = expand("%:t:r") . a:ext
-    silent! 0r ~/Dropbox/github/my_env/vim/templates/c_header.txt
+    silent! 0r ~/github/my_env/vim/templates/c_header.txt
     exe ":1,6s/FILE_NAME/".fname
     exe ":1,6s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
     exe ":1,6s/CREATE_DATE/".strftime("%c")
@@ -197,10 +197,24 @@ endfunc
 
 func! NewFilePython()
     let fname = expand("%:t:r") . ".py"
-    silent! 0r ~/Dropbox/github/my_env/vim/templates/py_header.txt
+    silent! 0r ~/github/my_env/vim/templates/py_header.txt
     exe ":1,7s/FILE_NAME/".fname
     exe ":1,7s/CREATE_DATE/".strftime("%c")
     exe ":1,7s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
+endfunc
+
+"" Doxygen Related
+func! InsertDoxygenClass()
+    silent! r! sed -n 1,7p ~/github/my_env/vim/templates/doxygen_cpp.txt
+    exe ":-6"
+    exe ":,+6s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
+    exe ":+1"
+endfunc
+
+func! InsertDoxygenFunction()
+    silent! r! sed -n 8,12p ~/github/my_env/vim/templates/doxygen_cpp.txt
+    exe ":-5"
+    exe ":,+5s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
 endfunc
 
 func! UpdateLastModified()
@@ -219,25 +233,30 @@ endfunc
 
 nmap <leader>q :call UpdateLastModifiedAndQuit()<cr><cr>
 nmap <leader>ulm :call UpdateLastModified()<cr><cr>
+nmap <leader>dc :call InsertDoxygenClass()<cr><cr>
+nmap <leader>df :call InsertDoxygenFunction()<cr><cr>
 
 autocmd BufNewFile *.c   call NewFileC(".c")
 autocmd BufNewFile *.cpp call NewFileC(".cpp")
 autocmd BufNewFile *.h   call NewFileC(".h")
 autocmd BufNewFile *.py  call NewFilePython()
 
-"""" YCM
-"let g:ycm_global_ycm_extra_conf = './.ycm_extra_conf.py'
-"let g:ycm_confirm_extra_conf = 0
-"let g:ycm_key_list_select_completion = ['<TAB>']
-"let g:ycm_key_list_previous_completion = ['<S-TAB>']
-"let g:ycm_autoclose_preview_window_after_completion = 1
-"let g:ycm_error_symbol = '>'
-"let g:ycm_warning_symbol = '*'
-"let g:ycm_key_invoke_completion = '<C-1>'
-"
-"nnoremap <leader>g :YcmCompleter GoTo<cr>
-"" nnoremap gg :YcmCompleter GoToImprecise
-"nnoremap <leader>d :YcmCompleter GoToDeclaration<cr>
-"nnoremap <leader>t :YcmCompleter GetType<cr>
-"nnoremap <leader>p :YcmCompleter GetParent<cr>
-"nnoremap <leader>c :YcmForceCompileAndDiagnostics<CR>
+""" YCM
+let g:ycm_global_ycm_extra_conf = './.ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_key_list_select_completion = ['<TAB>']
+let g:ycm_key_list_previous_completion = ['<S-TAB>']
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_error_symbol = '>'
+let g:ycm_warning_symbol = '*'
+let g:ycm_key_invoke_completion = '<C-1>'
+
+nnoremap <leader>g :YcmCompleter GoTo<cr>
+" nnoremap gg :YcmCompleter GoToImprecise
+nnoremap <leader>d :YcmCompleter GoToDeclaration<cr>
+nnoremap <leader>f :YcmCompleter GoToDefinition<cr>
+nnoremap <leader>t :YcmCompleter GetType<cr>
+nnoremap <leader>p :YcmCompleter GetParent<cr>
+nnoremap <leader>c :YcmForceCompileAndDiagnostics<CR>
+
+
