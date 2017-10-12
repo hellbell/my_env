@@ -237,11 +237,9 @@ nmap <leader>dc :call InsertDoxygenClass()<cr><cr>
 nmap <leader>df :call InsertDoxygenFunction()<cr><cr>
 
 autocmd BufNewFile *.c   call NewFileC(".c")
-autocmd BufNewFile *.C   call NewFileC(".C")
 autocmd BufNewFile *.cpp call NewFileC(".cpp")
 autocmd BufNewFile *.h   call NewFileC(".h")
 autocmd BufNewFile *.py  call NewFilePython()
-
 
 """ YCM
 let g:ycm_global_ycm_extra_conf = './.ycm_extra_conf.py'
@@ -260,4 +258,5 @@ nnoremap <leader>f :YcmCompleter GoToDefinition<cr>
 nnoremap <leader>t :YcmCompleter GetType<cr>
 nnoremap <leader>p :YcmCompleter GetParent<cr>
 nnoremap <leader>c :YcmForceCompileAndDiagnostics<CR>
+
 
