@@ -61,7 +61,7 @@ set visualbell
 set t_vb=
 set showcmd     " Show (partial) command in status line.
 set showmatch   " Show matching brackets.
-set backspace=indent,sol,start
+set backspace=indent,eol,start
 
 set laststatus=2    " Always show a status bar
 set ttimeoutlen=50
