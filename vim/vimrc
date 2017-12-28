@@ -84,7 +84,7 @@ set expandtab
 syntax on
 
 " CTags
-set tags=~/git/power_baum_2.0/tags
+set tags=tags;
 if version >= 500
 func! Sts( )
 	let st = expand("<cword>")
