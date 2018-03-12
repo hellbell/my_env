@@ -8,7 +8,7 @@
 "   source <path to this repository>/vimrc
 """"""""""""""""""""""""""""""""""""""
 
-let vim_file_path = expand('~/Dropbox/github/my_env/vim/')
+let vim_file_path = expand('~/github/my_env/vim/')
 let vundle_path = expand(vim_file_path . '/bundle/Vundle.vim')
 
 """"""""""""""""""""""""""""""""""""""
