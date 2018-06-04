@@ -41,7 +41,6 @@ call plug#begin(expand('~/.vim/plugged'))
 """""""""""""""""""""""""""""""""""""""
 "" Plug install packages
 """""""""""""""""""""""""""""""""""""""
-Plug 'taglist.vim'
 Plug 'Valloric/YouCompleteMe'
 
 Plug 'scrooloose/nerdtree'
