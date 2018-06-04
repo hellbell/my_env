@@ -7,6 +7,8 @@
 " Change your ~/.vimrc as follows:
 "   set runtimepath+=<path to this repository>
 "   source <path to this repository>/vimrc
+" And run vim with the following parameters to install the plugins:
+"   $ vim +PlugInstall +qa
 """"""""""""""""""""""""""""""""""""""
 
 let vim_file_path = expand('~/github/my_env/vim/')
