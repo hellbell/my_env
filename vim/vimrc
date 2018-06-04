@@ -46,7 +46,6 @@ Plug 'Valloric/YouCompleteMe'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -317,17 +316,9 @@ nnoremap <silent> <F6> :NERDTreeClose<CR>
 "F9 to F12
 
 "" Git
-noremap <Leader>ga :Gwrite<CR>
-noremap <Leader>gc :Gcommit<CR>
-noremap <Leader>gsh :Gpush<CR>
-noremap <Leader>gll :Gpull<CR>
-noremap <Leader>gs :Gstatus<CR>
-noremap <Leader>gb :Gblame<CR>
-noremap <Leader>gd :Gvdiff<CR>
-noremap <Leader>gr :Gremove<CR>
-
-"" Open current line on GitHub
-nnoremap <Leader>o :.Gbrowse<CR>
+"noremap <leader>M :Magit<CR>
+noremap <leader>gnh :GitGutterNextHunk<CR>
+noremap <leader>gph :GitGutterPrevHunk<CR>
 
 " session management
 nnoremap <leader>so :OpenSession<Space>
