@@ -180,6 +180,7 @@ let g:session_command_aliases = 1
 syntax on
 set number
 set ruler       " Show current position
+set wrap
 
 let no_buffers_menu=1
 
