@@ -45,8 +45,8 @@ Plug 'Valloric/YouCompleteMe'
 
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
-Plug 'tpope/vim-commentary'
 Plug 'jreybert/vimagit'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'vim-airline/vim-airline'
@@ -88,9 +88,6 @@ endif
 
 Plug 'honza/vim-snippets'
 
-"" Color
-Plug 'tomasr/molokai'
-
 """""""""""""""""""""""""""""""""""""""
 "" Custom bundles
 " c
@@ -101,15 +98,9 @@ Plug 'ludwig/split-manpage.vim'
 "" Go Lang Bundle
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 
-" html
-"" HTML Bundle
-Plug 'hail2u/vim-css3-syntax'
-Plug 'gorodinskiy/vim-coloresque'
-Plug 'tpope/vim-haml'
-Plug 'mattn/emmet-vim'
-
 " python
 "" Python Bundle
+"Plug 'davidhalter/jedi-vim'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 
 " scala
@@ -146,7 +137,7 @@ set shiftwidth=4
 set expandtab
 
 "" Map leader to ,
-let mapleader=","
+let mapleader=','
 
 "" Enable hidden buffers
 set hidden
@@ -158,8 +149,8 @@ set ignorecase
 set smartcase
 
 """ Directories for swp files
-"set nobackup
-"set noswapfile
+set nobackup
+set noswapfile
 
 set fileformats=unix,dos,mac
 
@@ -179,9 +170,9 @@ let g:session_command_aliases = 1
 "" Visual Settings
 """""""""""""""""""""""""""""""""""""""
 syntax on
-set number
 set ruler       " Show current position
 set wrap
+set number
 
 let no_buffers_menu=1
 
@@ -320,8 +311,9 @@ nnoremap <silent> <F6> :NERDTreeClose<CR>
 
 "" Git
 "noremap <leader>M :Magit<CR>
-noremap <leader>gnh :GitGutterNextHunk<CR>
-noremap <leader>gph :GitGutterPrevHunk<CR>
+noremap <leader>ggn :GitGutterNextHunk<CR>
+noremap <leader>ggp :GitGutterPrevHunk<CR>
+noremap <leader>ggt :GitGutterToggle<CR>
 
 " session management
 nnoremap <leader>so :OpenSession<Space>
@@ -373,16 +365,16 @@ let g:UltiSnipsEditSplit="vertical"
 
 " syntastic
 let g:syntastic_always_populate_loc_list=1
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_style_error_symbol = '✗'
-let g:syntastic_style_warning_symbol = '⚠'
+let g:syntastic_error_symbol='e'
+let g:syntastic_warning_symbol='w'
+let g:syntastic_style_error_symbol = 'e'
+let g:syntastic_style_warning_symbol = 'w'
 let g:syntastic_auto_loc_list=1
 let g:syntastic_aggregate_errors = 1
 
-" Tagbar
-nmap <silent> <F4> :TagbarToggle<CR>
-let g:tagbar_autofocus = 1
+"" Tagbar
+"nmap <silent> <F4> :TagbarToggle<CR>
+"let g:tagbar_autofocus = 1
 
 
 """""""""""""""""""""""""""""""""""""""
@@ -399,9 +391,6 @@ cnoreabbrev WQ wq
 cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
-
-
-
 
 
 "*****************************************************************************
@@ -509,11 +498,6 @@ augroup go
 augroup END
 
 
-" html
-" for html files, 2 spaces
-autocmd Filetype html setlocal ts=2 sw=2 expandtab
-
-
 " python
 " vim-python
 augroup vimrc-python
@@ -570,72 +554,55 @@ set autoread
 "" Plugin Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-""""""""""""""""""""""""""""""""""""""
-" airline
-""""""""""""""""""""""""""""""""""""""
-let g:airline_left_sep='|'
-let g:airline_right_sep='|'
-let g:airline_theme = 'molokai'
+"""""""""""""""""""""""""""""""""""""""
+"" airline
+"""""""""""""""""""""""""""""""""""""""
+let g:airline_theme = 'powerlineish'
+"let g:airline_theme = 'molokai'
 let g:airline#extensions#tabline#left_sep=' '
 let g:airline#extensions#tabline#left_alt_sep='|'
 
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline_skip_empty_sections = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
 
-" vim-airline
-let g:airline#extensions#virtualenv#enabled = 1
+let g:airline_highlighting_cache = 1
 
+"let g:airline#extensions#virtualenv#enabled = 1
 
-" vim-airline
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 
-if !exists('g:airline_powerline_fonts')
-"  let g:airline#extensions#tabline#left_sep = ' '
-"  let g:airline#extensions#tabline#left_alt_sep = '|'
-"  let g:airline_left_sep          = '▶'
-"  let g:airline_left_alt_sep      = '»'
-"  let g:airline_right_sep         = '◀'
-"  let g:airline_right_alt_sep     = '«'
-"  let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
-"  let g:airline#extensions#readonly#symbol   = '⊘'
-"  let g:airline#extensions#linecolumn#prefix = '¶'
-"  let g:airline#extensions#paste#symbol      = 'ρ'
-"  let g:airline_symbols.linenr    = '␊'
-"  let g:airline_symbols.branch    = '⎇'
-"  let g:airline_symbols.paste     = 'ρ'
-"  let g:airline_symbols.paste     = 'Þ'
-"  let g:airline_symbols.paste     = '∥'
-"  let g:airline_symbols.whitespace = 'Ξ'
-else
-"  let g:airline#extensions#tabline#left_sep = ''
-"  let g:airline#extensions#tabline#left_alt_sep = ''
-
-  " powerline symbols
-"  let g:airline_left_sep = ''
-"  let g:airline_left_alt_sep = ''
-"  let g:airline_right_sep = ''
-"  let g:airline_right_alt_sep = ''
-"  let g:airline_symbols.branch = ''
-"  let g:airline_symbols.readonly = ''
-"  let g:airline_symbols.linenr = ''
-endif
-
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline_left_sep          = '|'
+let g:airline_left_alt_sep      = '|'
+let g:airline_right_sep         = '|'
+let g:airline_right_alt_sep     = '|'
+let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
+let g:airline#extensions#readonly#symbol   = '⊘'
+let g:airline#extensions#linecolumn#prefix = '¶'
+let g:airline#extensions#paste#symbol      = 'ρ'
+let g:airline_symbols.linenr    = '␊'
+let g:airline_symbols.branch    = '⎇'
+let g:airline_symbols.paste     = 'ρ'
+let g:airline_symbols.paste     = 'Þ'
+let g:airline_symbols.paste     = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
 
 """"""""""""""""""""""""""""""""""""""
 " Syntastic
 """"""""""""""""""""""""""""""""""""""
 " syntastic
 let g:syntastic_always_populate_loc_list=1
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_style_error_symbol = '✗'
-let g:syntastic_style_warning_symbol = '⚠'
+let g:syntastic_error_symbol='e'
+let g:syntastic_warning_symbol='w'
+let g:syntastic_style_error_symbol = 'e'
+let g:syntastic_style_warning_symbol = 'w'
 let g:syntastic_auto_loc_list=1
 let g:syntastic_aggregate_errors = 1
 
@@ -761,5 +728,4 @@ autocmd BufNewFile *.c   call NewFileC(".c")
 autocmd BufNewFile *.cpp call NewFileC(".cpp")
 autocmd BufNewFile *.h   call NewFileC(".h")
 autocmd BufNewFile *.py  call NewFilePython()
-
 
