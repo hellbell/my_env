@@ -522,6 +522,18 @@ augroup END
 
 
 "*****************************************************************************
+"" Functions
+"*****************************************************************************
+if !exists('*s:setupWrapping')
+  function s:setupWrapping()
+    set wrap
+    set wm=2
+    set textwidth=79
+  endfunction
+endif
+
+
+"*****************************************************************************
 "" Autocmd Rules
 "*****************************************************************************
 "" The PC is fast enough, do syntax highlight syncing from start unless 200 lines
