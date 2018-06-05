@@ -47,6 +47,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-commentary'
 Plug 'jreybert/vimagit'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
@@ -179,6 +181,7 @@ let g:session_command_aliases = 1
 syntax on
 set number
 set ruler       " Show current position
+set wrap
 
 let no_buffers_menu=1
 
