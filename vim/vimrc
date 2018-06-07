@@ -55,7 +55,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'vim-scripts/grep.vim'
 Plug 'vim-scripts/CSApprox'
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/syntastic'
 Plug 'Yggdroot/indentLine'
@@ -124,8 +123,8 @@ set updatetime=250
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
-set bomb
-set binary
+" set bomb
+" set binary
 set ttyfast
 
 "" Fix backspace indent
@@ -362,15 +361,6 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 let g:UltiSnipsEditSplit="vertical"
-
-" syntastic
-let g:syntastic_always_populate_loc_list=1
-let g:syntastic_error_symbol='e'
-let g:syntastic_warning_symbol='w'
-let g:syntastic_style_error_symbol = 'e'
-let g:syntastic_style_warning_symbol = 'w'
-let g:syntastic_auto_loc_list=1
-let g:syntastic_aggregate_errors = 1
 
 "" Tagbar
 "nmap <silent> <F4> :TagbarToggle<CR>
