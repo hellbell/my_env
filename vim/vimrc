@@ -172,7 +172,6 @@ let g:session_command_aliases = 1
 """""""""""""""""""""""""""""""""""""""
 syntax on
 set ruler       " Show current position
-set wrap
 set number
 
 let no_buffers_menu=1
@@ -623,13 +622,13 @@ let g:ycm_error_symbol = '>'
 let g:ycm_warning_symbol = '*'
 let g:ycm_key_invoke_completion = '<C-1>'
 
-nnoremap <leader>g :YcmCompleter GoTo<cr>
+nnoremap <leader>yg :YcmCompleter GoTo<cr>
 " nnoremap gg :YcmCompleter GoToImprecise
-nnoremap <leader>d :YcmCompleter GoToDeclaration<cr>
-nnoremap <leader>f :YcmCompleter GoToDefinition<cr>
-nnoremap <leader>t :YcmCompleter GetType<cr>
-nnoremap <leader>p :YcmCompleter GetParent<cr>
-nnoremap <leader>c :YcmForceCompileAndDiagnostics<CR>
+nnoremap <leader>yd :YcmCompleter GoToDeclaration<cr>
+nnoremap <leader>yf :YcmCompleter GoToDefinition<cr>
+nnoremap <leader>yt :YcmCompleter GetType<cr>
+nnoremap <leader>yp :YcmCompleter GetParent<cr>
+nnoremap <leader>yc :YcmForceCompileAndDiagnostics<CR>
 
 """""""""""""""""""""""""""""""""""""""
 "" NERDTree configuration
@@ -730,3 +729,4 @@ autocmd BufNewFile *.cpp call NewFileC(".cpp")
 autocmd BufNewFile *.h   call NewFileC(".h")
 autocmd BufNewFile *.py  call NewFilePython()
 
+set wrap
