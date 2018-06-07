@@ -42,9 +42,9 @@ call plug#begin(expand('~/.vim/plugged'))
 "" Plug install packages
 """""""""""""""""""""""""""""""""""""""
 Plug 'Valloric/YouCompleteMe'
+Plug 'lervag/vimtex'
 
 Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
 Plug 'jreybert/vimagit'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
@@ -53,12 +53,10 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-scripts/grep.vim'
-Plug 'vim-scripts/CSApprox'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/syntastic'
 Plug 'Yggdroot/indentLine'
-Plug 'avelino/vim-bootstrap-updater'
 Plug 'sheerun/vim-polyglot'
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -72,13 +70,9 @@ if exists('make')
 endif
 Plug 'Shougo/vimproc.vim', {'do': g:make}
 
-"" Vim-Session
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-session'
-
-if v:version >= 703
-  Plug 'Shougo/vimshell.vim'
-endif
+"if v:version >= 703
+"  Plug 'Shougo/vimshell.vim'
+"endif
 
 if v:version >= 704
   "" Snippets
@@ -91,7 +85,6 @@ Plug 'honza/vim-snippets'
 "" Custom bundles
 " c
 Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
-Plug 'ludwig/split-manpage.vim'
 
 " go
 "" Go Lang Bundle
@@ -160,11 +153,6 @@ else
     set shell=/bin/sh
 endif
 
-" session management
-let g:session_directory = "~/.vim/session"
-let g:session_autoload = "no"
-let g:session_autosave = "no"
-let g:session_command_aliases = 1
 
 """""""""""""""""""""""""""""""""""""""
 "" Visual Settings
@@ -240,15 +228,12 @@ if has("gui_running")
     set transparency=7
   endif
 else
-  let g:CSApprox_loaded = 1
-
   " IndentLine
   let g:indentLine_enabled = 1
   let g:indentLine_concealcursor = 0
   let g:indentLine_char = '┆'
   let g:indentLine_faster = 1
 
-  
   if $COLORTERM == 'gnome-terminal'
     set term=gnome-256color
   else
@@ -256,7 +241,6 @@ else
       set term=xterm-256color
     endif
   endif
-  
 endif
 
 if &term =~ '256color'
@@ -313,12 +297,6 @@ nnoremap <silent> <F6> :NERDTreeClose<CR>
 noremap <leader>ggn :GitGutterNextHunk<CR>
 noremap <leader>ggp :GitGutterPrevHunk<CR>
 noremap <leader>ggt :GitGutterToggle<CR>
-
-" session management
-nnoremap <leader>so :OpenSession<Space>
-nnoremap <leader>ss :SaveSession<Space>
-nnoremap <leader>sd :DeleteSession<CR>
-nnoremap <leader>sc :CloseSession<CR>
 
 "" Tabs
 nnoremap <Tab> gt
@@ -651,6 +629,12 @@ let g:vimshell_prompt =  '$ '
 """""""""""""""""""""""""""""""""""""""
 nnoremap <silent> <leader>sh :VimShellCreate<CR>
 
+"""""""""""""""""""""""""""""""""""""""
+" Polyglot
+"""""""""""""""""""""""""""""""""""""""
+let g:polyglot_disabled = ['latex']
+
+let g:indentLine_fileTypeExclude = ['latex', 'tex']
 
 """"""""""""""""""""""""""""""""""""""
 " New file header
