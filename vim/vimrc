@@ -441,7 +441,6 @@ augroup completion_preview_close
 augroup END
 
 augroup go
-
   au!
   au Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
   au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
@@ -462,7 +461,6 @@ augroup go
   au FileType go imap <C-g> <esc>:<C-u>GoDecls<cr>
   au FileType go imap <leader>dr <esc>:<C-u>GoDeclsDir<cr>
   au FileType go nmap <leader>rb :<C-u>call <SID>build_go_files()<CR>
-
 augroup END
 
 
@@ -576,7 +574,6 @@ let g:syntastic_aggregate_errors = 1
 
 " syntastic
 let g:syntastic_python_checkers=['python', 'flake8']
-
 
 """""""""""""""""""""""""""""""""""""""
 "" YCM
