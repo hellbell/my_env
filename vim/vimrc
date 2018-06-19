@@ -1,7 +1,7 @@
 """"""""""""""""""""""""""""""""""""""
 " Author: Jinwook Jung
 " Email : jinwookjungs@gmail.com
-" Last modification: Mon Jun  4 17:34:28 KST 2018
+" Last modification: Mon Jun 18 16:53:41 KST 2018
 "
 " Guided by vim-bootstrap: https://github.com/avelino/vim-bootstrap
 " Change your ~/.vimrc as follows:
@@ -53,8 +53,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-scripts/grep.vim'
-Plug 'bronson/vim-trailing-whitespace'
-Plug 'majutsushi/tagbar'
+"Plug 'majutsushi/tagbar'           THIS MAKES VIM SLOW WHEN OPENING A LARGE FILE
 Plug 'scrooloose/syntastic'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
@@ -281,7 +280,7 @@ nnoremap <silent> <leader><space> :noh<cr>
 noremap <F1> v]}zf
 noremap <F2> zo
 autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview 
+autocmd BufWinEnter *.* silent loadview
 
 "F1 to F4
 nnoremap <F3> :Tlist<cr><C-W><C-W>
@@ -307,10 +306,10 @@ nnoremap <silent> <S-t> :tabnew<CR>
 nnoremap <leader>. :lcd %:p:h<CR>
 
 "" Opens an edit command with the path of the currently edited file filled in
-noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+noremap <Leader>e :e <C-R>=expand("%:p:h") . "/"<CR>
 
 "" Opens a tab edit command with the path of the currently edited file filled
-noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
+noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/"<CR>
 
 "" fzf.vim
 set wildmode=list:longest,list:full
@@ -523,7 +522,7 @@ set autoread
 """""""""""""""""""""""""""""""""""""""
 "" airline
 """""""""""""""""""""""""""""""""""""""
-let g:airline_theme = 'powerlineish'
+let g:airline_theme = 'minimalist'
 "let g:airline_theme = 'molokai'
 let g:airline#extensions#tabline#left_sep=' '
 let g:airline#extensions#tabline#left_alt_sep='|'
@@ -532,7 +531,7 @@ let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tagbar#enabled = 1
+"let g:airline#extensions#tagbar#enabled = 1
 let g:airline_skip_empty_sections = 1
 
 let g:airline_highlighting_cache = 1
@@ -633,6 +632,7 @@ let g:polyglot_disabled = ['latex']
 
 let g:indentLine_fileTypeExclude = ['latex', 'tex']
 
+
 """"""""""""""""""""""""""""""""""""""
 " New file header
 """"""""""""""""""""""""""""""""""""""
@@ -701,3 +701,10 @@ autocmd BufNewFile *.h   call NewFileC(".h")
 autocmd BufNewFile *.py  call NewFilePython()
 
 set wrap
+func! TrimWhitespace()
+    let l:save = winsaveview()
+    %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+command! TrimWhitespace call TrimWhitespace()
+nmap <leader>tw :call TrimWhitespace()<cr><cr>
