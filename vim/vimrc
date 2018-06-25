@@ -224,9 +224,8 @@ endif
 let mapleader=','
 
 "" Split
-noremap <Leader>h :<C-u>split<CR>
-noremap <Leader>v :<C-u>vsplit<CR>
-
+noremap <leader>h :<C-u>split<cr>
+noremap <leader>v :<C-u>vsplit<cr>
 noremap <space>w :w<cr>
 
 " Buffer navigation
@@ -264,7 +263,7 @@ nnoremap <silent> <F6> :NERDTreeClose<CR>
 "F9 to F12
 
 "" Git
-"noremap <leader>M :Magit<CR>
+noremap <leader>M :Magit<CR>
 noremap <leader>ggn :GitGutterNextHunk<CR>
 noremap <leader>ggp :GitGutterPrevHunk<CR>
 noremap <leader>ggt :GitGutterToggle<CR>
