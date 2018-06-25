@@ -52,7 +52,6 @@ Plug 'tpope/vim-repeat'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
-Plug 'vim-scripts/grep.vim'
 "Plug 'majutsushi/tagbar'           THIS MAKES VIM SLOW WHEN OPENING A LARGE FILE
 Plug 'scrooloose/syntastic'
 Plug 'Yggdroot/indentLine'
@@ -67,40 +66,18 @@ let g:make = 'gmake'
 if exists('make')
         let g:make = 'make'
 endif
-Plug 'Shougo/vimproc.vim', {'do': g:make}
-
-"if v:version >= 703
-"  Plug 'Shougo/vimshell.vim'
-"endif
 
 if v:version >= 704
   "" Snippets
   Plug 'SirVer/ultisnips'
 endif
-
 Plug 'honza/vim-snippets'
 
 """""""""""""""""""""""""""""""""""""""
 "" Custom bundles
-" c
-Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
-
-" go
-"" Go Lang Bundle
-Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
-
-" python
-"" Python Bundle
-"Plug 'davidhalter/jedi-vim'
-Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
-
-" scala
-if has('python')
-    " sbt-vim
-    Plug 'ktvoelker/sbt-vim'
-endif
-" vim-scala
-Plug 'derekwyatt/vim-scala'
+Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}     " C
+Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}   " Go Lang Bundle
+Plug 'derekwyatt/vim-scala'                         " Scala
 
 call plug#end()
 
@@ -115,21 +92,14 @@ set updatetime=250
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
-" set bomb
-" set binary
-set ttyfast
-
-"" Fix backspace indent
-set backspace=indent,eol,start
+set ttyfast                     " Smoother scroll
+set backspace=indent,eol,start  " Fix backspace over indent, line breaks
 
 "" Tabs. May be overriten by autocmd rules
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
-
-"" Map leader to ,
-let mapleader=','
 
 "" Enable hidden buffers
 set hidden
@@ -250,6 +220,9 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Key mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Map leader to ,
+let mapleader=','
+
 "" Split
 noremap <Leader>h :<C-u>split<CR>
 noremap <Leader>v :<C-u>vsplit<CR>
@@ -283,7 +256,6 @@ autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview
 
 "F1 to F4
-nnoremap <F3> :Tlist<cr><C-W><C-W>
 
 "F5 to F8
 nnoremap <silent> <F5> :NERDTreeToggle<cr>
@@ -338,10 +310,6 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 let g:UltiSnipsEditSplit="vertical"
-
-"" Tagbar
-"nmap <silent> <F4> :TagbarToggle<CR>
-"let g:tagbar_autofocus = 1
 
 
 """""""""""""""""""""""""""""""""""""""
@@ -463,16 +431,6 @@ augroup go
 augroup END
 
 
-" python
-" vim-python
-augroup vimrc-python
-  autocmd!
-  autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=79
-      \ formatoptions+=croq softtabstop=4
-      \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
-augroup END
-
-
 "*****************************************************************************
 "" Functions
 "*****************************************************************************
@@ -559,6 +517,7 @@ let g:airline_symbols.paste     = 'Þ'
 let g:airline_symbols.paste     = '∥'
 let g:airline_symbols.whitespace = 'Ξ'
 
+
 """"""""""""""""""""""""""""""""""""""
 " Syntastic
 """"""""""""""""""""""""""""""""""""""
@@ -606,30 +565,11 @@ let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
 let g:NERDTreeWinSize = 50
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 
-"""""""""""""""""""""""""""""""""""""""
-" grep.vim
-"""""""""""""""""""""""""""""""""""""""
-nnoremap <silent> <leader>f :Rgrep<CR>
-let Grep_Default_Options = '-IR'
-let Grep_Skip_Files = '*.log *.db'
-let Grep_Skip_Dirs = '.git node_modules'
-
-"""""""""""""""""""""""""""""""""""""""
-" vimshell.vim
-"""""""""""""""""""""""""""""""""""""""
-let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-let g:vimshell_prompt =  '$ '
-
-"""""""""""""""""""""""""""""""""""""""
-" terminal emulation
-"""""""""""""""""""""""""""""""""""""""
-nnoremap <silent> <leader>sh :VimShellCreate<CR>
 
 """""""""""""""""""""""""""""""""""""""
 " Polyglot
 """""""""""""""""""""""""""""""""""""""
 let g:polyglot_disabled = ['latex']
-
 let g:indentLine_fileTypeExclude = ['latex', 'tex']
 
 
@@ -708,3 +648,4 @@ func! TrimWhitespace()
 endfun
 command! TrimWhitespace call TrimWhitespace()
 nmap <leader>tw :call TrimWhitespace()<cr><cr>
+
