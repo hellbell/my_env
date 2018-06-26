@@ -294,13 +294,13 @@ cnoreabbrev Qall qall
 "*****************************************************************************
 "" Autocmd Rules
 "*****************************************************************************
-"if !exists('*s:setupWrapping')
-"  function s:setupWrapping()
-"    set wrap
-"    set wm=2
-"    set textwidth=79
-"  endfunction
-"endif
+if !exists('*s:setupWrapping')
+  function s:setupWrapping()
+    set wrap
+    set wm=2
+    set textwidth=79
+  endfunction
+endif
 
 "" txt
 augroup vimrc-wrapping
