@@ -43,6 +43,7 @@ call plug#begin(expand('~/.vim/plugged'))
 """""""""""""""""""""""""""""""""""""""
 Plug 'Valloric/YouCompleteMe'
 Plug 'lervag/vimtex'
+Plug 'terryma/vim-multiple-cursors'
 
 Plug 'scrooloose/nerdtree'
 Plug 'jreybert/vimagit'
@@ -54,7 +55,6 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 "Plug 'majutsushi/tagbar'           THIS MAKES VIM SLOW WHEN OPENING A LARGE FILE
 Plug 'scrooloose/syntastic'
-Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -81,7 +81,7 @@ Plug 'derekwyatt/vim-scala'                         " Scala
 
 call plug#end()
 
-" Required:
+"" Required:
 filetype plugin indent on
 
 
@@ -197,12 +197,6 @@ if has("gui_running")
     set transparency=7
   endif
 else
-  " IndentLine
-  let g:indentLine_enabled = 1
-  let g:indentLine_concealcursor = 0
-  let g:indentLine_char = '┆'
-  let g:indentLine_faster = 1
-
   if $COLORTERM == 'gnome-terminal'
     set term=gnome-256color
   else
@@ -222,6 +216,13 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Map leader to ,
 let mapleader=','
+
+"" Spell Checking
+map <leader>ss :setlocal spell!<cr>
+map <leader>sn ]s
+map <leader>sp [s
+map <leader>sa zg
+map <leader>s? z=
 
 "" Split
 noremap <leader>h :<C-u>split<cr>
@@ -246,7 +247,7 @@ noremap <leader>make :!make<cr>
 noremap <leader>latex :!pdflatex "%:p"<cr>
 
 "" Clean search (highlight)
-nnoremap <silent> <leader><space> :noh<cr>
+nnoremap <silent> <leader><cr> :noh<cr>
 
 " Folding
 noremap <F1> v]}zf
@@ -258,7 +259,6 @@ autocmd BufWinEnter *.* silent loadview
 
 "F5 to F8
 nnoremap <silent> <F5> :NERDTreeToggle<cr>
-nnoremap <silent> <F6> :NERDTreeClose<CR>
 
 "F9 to F12
 
@@ -269,18 +269,24 @@ noremap <leader>ggp :GitGutterPrevHunk<CR>
 noremap <leader>ggt :GitGutterToggle<CR>
 
 "" Tabs
-nnoremap <Tab> gt
-nnoremap <S-Tab> gT
 nnoremap <silent> <S-t> :tabnew<CR>
+"map <leader>tn :tabnew<cr>
+"map <leader>to :tabonly<cr>
+"map <leader>tc :tabclose<cr>
+"map <leader>tm :tabmove
+"
+"" Opens a new tab with the current buffer's path
+"" Super useful when editing files in the same directory
+"map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 "" Set working directory
-nnoremap <leader>. :lcd %:p:h<CR>
+noremap <leader>. :lcd %:p:h<CR>
 
 "" Opens an edit command with the path of the currently edited file filled in
-noremap <Leader>e :e <C-R>=expand("%:p:h") . "/"<CR>
+noremap <leader>e :e <C-R>=expand("%:p:h") . "/"<CR>
 
 "" Opens a tab edit command with the path of the currently edited file filled
-noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/"<CR>
+noremap <leader>te :tabe <C-R>=expand("%:p:h") . "/"<CR>
 
 "" fzf.vim
 set wildmode=list:longest,list:full
@@ -291,13 +297,6 @@ let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/
 if executable('ag')
   let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
   set grepprg=ag\ --nogroup\ --nocolor
-endif
-
-" ripgrep
-if executable('rg')
-  let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
-  set grepprg=rg\ --vimgrep
-  command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 endif
 
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
@@ -325,36 +324,6 @@ cnoreabbrev WQ wq
 cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
-
-
-"*****************************************************************************
-"" CTags and CScope
-"*****************************************************************************
-" CTags
-set tags=tags;
-if version >= 500
-func! Sts( )
-	let st = expand("<cword>")
-	exe "sts ".st
-endfunc
-nmap ,st :call Sts( )<cr>
-
-func! Tj( )
-	let st = expand("<cword>")
-	exe "tj ".st
-endfunc
-nmap ,tj :call Tj( )<cr>
-
-"Cscope
-
-"Man page for C language
-func! Man()
-	let sm = expand("<cword>")
-	exe "!man -S 2:3:4:5:6:7:8:9:tcl:n:l:p:o ".sm
-endfunc
-nmap <leader>ma :call Man()<cr><cr>
-
-endif
 
 
 "*****************************************************************************
@@ -569,75 +538,35 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 " Polyglot
 """""""""""""""""""""""""""""""""""""""
 let g:polyglot_disabled = ['latex']
-let g:indentLine_fileTypeExclude = ['latex', 'tex']
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Custom Functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-""""""""""""""""""""""""""""""""""""""
-" New file header
-""""""""""""""""""""""""""""""""""""""
-let template_dir = expand(vim_file_path . 'templates/')
-let $C_HEADER_TXT = expand(template_dir . 'c_header.txt')
-let $PY_HEADER_TXT = expand(template_dir . 'py_header.txt')
-let $DOXYGEN_CPP_TXT = expand(template_dir . 'doxygen_cpp.txt')
+"""""""""""""""""""""""""""""""""""""""
+"" CTags and CScope
+"""""""""""""""""""""""""""""""""""""""
+set tags=tags;
+if version >= 500
+    func! Sts( )
+        let st = expand("<cword>")
+        exe "sts ".st
+    endfunc
+    nmap ,st :call Sts( )<cr>
 
-func! NewFileC(ext)
-    let fname = expand("%:t:r") . a:ext
-    silent! 0r $C_HEADER_TXT
-    exe ":1,6s/FILE_NAME/".fname
-    exe ":1,6s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
-    exe ":1,6s/CREATE_DATE/".strftime("%c")
-endfunc
+    func! Tj( )
+        let st = expand("<cword>")
+        exe "tj ".st
+    endfunc
+    nmap ,tj :call Tj( )<cr>
 
-func! NewFilePython()
-    let fname = expand("%:t:r") . ".py"
-    silent! 0r $PY_HEADER_TXT
-    exe ":1,7s/FILE_NAME/".fname
-    exe ":1,7s/CREATE_DATE/".strftime("%c")
-    exe ":1,7s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
-endfunc
-
-"" Doxygen Related
-func! InsertDoxygenClass()
-    silent! r! sed -n 1,7p $DOXYGEN_CPP_TXT
-    exe ":-6"
-    exe ":,+6s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
-    exe ":+1"
-endfunc
-
-func! InsertDoxygenFunction()
-    silent! r! sed -n 8,12p $DOXYGEN_CPP_TXT
-    exe ":-5"
-    exe ":,+5s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
-endfunc
-
-func! UpdateLastModified()
-    if (&ft=='c' || &ft=='C' || &ft=='cpp' || &ft=='h')
-        exe ":1,7s/@date.*/@date    " .strftime("%Y-%m-%d %H:%M:%S")
-    endif
-    if (expand("%:e") =='py')
-        exe ":1,7s/Last modified  :.*/Last modified  : " .strftime("%Y-%m-%d %H:%M:%S")
-    endif
-endfunc
-
-func! UpdateDoxygenDate()
-    exe ":,s/@date.*/@date   " .strftime("%Y-%m-%d %H:%M:%S")
-endfunc
-
-func! UpdateLastModifiedAndQuit()
-    exe UpdateLastModified()
-    exe ":wq!"
-endfunc
-
-nmap <leader>q :call UpdateLastModifiedAndQuit()<cr><cr>
-nmap <leader>ulm :call UpdateLastModified()<cr><cr>
-nmap <leader>dc :call InsertDoxygenClass()<cr><cr>
-nmap <leader>df :call InsertDoxygenFunction()<cr><cr>
-nmap <leader>ufd :call UpdateDoxygenDate()<cr><cr>
-
-autocmd BufNewFile *.c   call NewFileC(".c")
-autocmd BufNewFile *.cpp call NewFileC(".cpp")
-autocmd BufNewFile *.h   call NewFileC(".h")
-autocmd BufNewFile *.py  call NewFilePython()
+    "Man page for C language
+    func! Man()
+        let sm = expand("<cword>")
+        exe "!man -S 2:3:4:5:6:7:8:9:tcl:n:l:p:o ".sm
+    endfunc
+    nmap <leader>ma :call Man()<cr><cr>
+endif
 
 set wrap
 func! TrimWhitespace()
