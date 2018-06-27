@@ -26,4 +26,4 @@ alias make="make -j8"
 alias maked="make -j8 DEBUG=1"
 alias maket="make -j8 UNIT_TEST=1"
 
-alias vi='vim'
+alias vi='vim --servername vim'

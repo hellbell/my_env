@@ -187,6 +187,7 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Map leader to ,
 let mapleader=','
+let maplocalleader="\<space>"
 
 "" Spell Checking
 map <leader>ss :setlocal spell!<cr>
@@ -371,6 +372,14 @@ nnoremap <leader>yt :YcmCompleter GetType<cr>
 nnoremap <leader>yp :YcmCompleter GetParent<cr>
 nnoremap <leader>yc :YcmForceCompileAndDiagnostics<CR>
 
+"""""""""""""""""""""""""""""""""""""""
+" vimtex
+"""""""""""""""""""""""""""""""""""""""
+let g:vimtex_view_method = 'skim'
+if !exists('g:ycm_semantic_triggers')
+    let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
 
 """""""""""""""""""""""""""""""""""""""
 " snippets
