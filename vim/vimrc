@@ -43,96 +43,57 @@ call plug#begin(expand('~/.vim/plugged'))
 """""""""""""""""""""""""""""""""""""""
 Plug 'Valloric/YouCompleteMe'
 Plug 'lervag/vimtex'
+Plug 'terryma/vim-multiple-cursors'
 
 Plug 'scrooloose/nerdtree'
 Plug 'jreybert/vimagit'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
-Plug 'vim-scripts/grep.vim'
 "Plug 'majutsushi/tagbar'           THIS MAKES VIM SLOW WHEN OPENING A LARGE FILE
 Plug 'scrooloose/syntastic'
-Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
+
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 else
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
   Plug 'junegunn/fzf.vim'
 endif
-let g:make = 'gmake'
-if exists('make')
-        let g:make = 'make'
-endif
-Plug 'Shougo/vimproc.vim', {'do': g:make}
-
-"if v:version >= 703
-"  Plug 'Shougo/vimshell.vim'
-"endif
 
 if v:version >= 704
   "" Snippets
   Plug 'SirVer/ultisnips'
 endif
-
 Plug 'honza/vim-snippets'
 
-"""""""""""""""""""""""""""""""""""""""
-"" Custom bundles
-" c
-Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
-
-" go
-"" Go Lang Bundle
-Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
-
-" python
-"" Python Bundle
-"Plug 'davidhalter/jedi-vim'
-Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
-
-" scala
-if has('python')
-    " sbt-vim
-    Plug 'ktvoelker/sbt-vim'
-endif
-" vim-scala
-Plug 'derekwyatt/vim-scala'
+"Plug 'fatih/vim-go'
 
 call plug#end()
 
-" Required:
+"" Required:
 filetype plugin indent on
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" General settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set updatetime=250
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
-" set bomb
-" set binary
-set ttyfast
-
-"" Fix backspace indent
-set backspace=indent,eol,start
+set ttyfast                     " Smoother scroll
+set lazyredraw                  " buffer screen updates instead of updating all the time. 
+set backspace=indent,eol,start  " Fix backspace over indent, line breaks
 
 "" Tabs. May be overriten by autocmd rules
-set tabstop=4
+set tabstop=4                   " number of spaces of tab character
 set softtabstop=4
-set shiftwidth=4
+set shiftwidth=4                " number of spaces to (auto)indent
 set expandtab
 
-"" Map leader to ,
-let mapleader=','
-
-"" Enable hidden buffers
-set hidden
+set hidden                      " Enable hidden buffers
 
 "" Searching
 set hlsearch
@@ -146,12 +107,19 @@ set noswapfile
 
 set fileformats=unix,dos,mac
 
-if exists('$SHELL')
-    set shell=$SHELL
-else
-    set shell=/bin/sh
-endif
+set noscrollbind
+set cindent
+set autoindent
+set smartindent
+set nowrap
+set hlsearch
 
+set showcmd     " Show (partial) command in status line.
+set showmatch   " Show matching brackets.
+
+set ttimeoutlen=50
+set history=700
+set autoread
 
 """""""""""""""""""""""""""""""""""""""
 "" Visual Settings
@@ -169,8 +137,7 @@ set gfn=Monospace\ 10
 
 set autoread        " Update automatically when a file is changed outside
 
-"" Disable the blinking cursor.
-set gcr=a:blinkon0
+set gcr=a:blinkon0  " Disable the blinking cursor.
 set scrolloff=3     " Keep the cursor away from top/bottom
 
 "" Status bar
@@ -192,56 +159,24 @@ if has('autocmd')
   autocmd GUIEnter * set visualbell t_vb=
 endif
 
-set noscrollbind
-set cindent
-set autoindent
-set smartindent
-set nowrap
-set hlsearch
 set bg=dark
-set showcmd     " Show (partial) command in status line.
-set showmatch   " Show matching brackets.
-
-set ttimeoutlen=50
-set history=700
-
-" Syntax highlight
-" Default highlight is better than polyglot
-let g:polyglot_disabled = ['python']
-let python_highlight_all = 1
 
 
-""""""""""""""""""""""""""""""""""""""
-" Color
-""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""
+"" Color
+"""""""""""""""""""""""""""""""""""""""
 colorscheme jellybeans_modified
-set cursorline
-highlight CursorLine ctermfg=NONE ctermbg=53 cterm=bold
+"set cursorline
+""highlight CursorLine ctermfg=NONE ctermbg=53 cterm=bold
 
 " Parenthesis highlighting
-autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | hi parens ctermfg=11
+"autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | hi parens ctermfg=11
 
-if has("gui_running")
-  if has("gui_mac") || has("gui_macvim")
-    set guifont=Menlo:h12
-    set transparency=7
-  endif
-else
-  " IndentLine
-  let g:indentLine_enabled = 1
-  let g:indentLine_concealcursor = 0
-  let g:indentLine_char = '┆'
-  let g:indentLine_faster = 1
-
-  if $COLORTERM == 'gnome-terminal'
+if $COLORTERM == 'gnome-terminal'
     set term=gnome-256color
-  else
-    if $TERM == 'xterm'
-      set term=xterm-256color
-    endif
-  endif
+elseif $TERM == 'xterm'
+  set term=xterm-256color
 endif
-
 if &term =~ '256color'
   set t_ut=
 endif
@@ -250,10 +185,19 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Key mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" Split
-noremap <Leader>h :<C-u>split<CR>
-noremap <Leader>v :<C-u>vsplit<CR>
+"" Map leader to ,
+let mapleader=','
 
+"" Spell Checking
+map <leader>ss :setlocal spell!<cr>
+map <leader>sn ]s
+map <leader>sp [s
+map <leader>sa zg
+map <leader>s? z=
+
+"" Split
+noremap <leader>h :<C-u>split<cr>
+noremap <leader>v :<C-u>vsplit<cr>
 noremap <space>w :w<cr>
 
 " Buffer navigation
@@ -274,7 +218,7 @@ noremap <leader>make :!make<cr>
 noremap <leader>latex :!pdflatex "%:p"<cr>
 
 "" Clean search (highlight)
-nnoremap <silent> <leader><space> :noh<cr>
+nnoremap <silent> <leader><cr> :noh<cr>
 
 " Folding
 noremap <F1> v]}zf
@@ -283,33 +227,37 @@ autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview
 
 "F1 to F4
-nnoremap <F3> :Tlist<cr><C-W><C-W>
 
 "F5 to F8
 nnoremap <silent> <F5> :NERDTreeToggle<cr>
-nnoremap <silent> <F6> :NERDTreeClose<CR>
 
 "F9 to F12
 
 "" Git
-"noremap <leader>M :Magit<CR>
-noremap <leader>ggn :GitGutterNextHunk<CR>
-noremap <leader>ggp :GitGutterPrevHunk<CR>
-noremap <leader>ggt :GitGutterToggle<CR>
+noremap <leader>M :Magit<CR>
+noremap <leader>gn :GitGutterNextHunk<CR>
+noremap <leader>gp :GitGutterPrevHunk<CR>
+noremap <leader>gt :GitGutterToggle<CR>
 
 "" Tabs
-nnoremap <Tab> gt
-nnoremap <S-Tab> gT
 nnoremap <silent> <S-t> :tabnew<CR>
+"map <leader>tn :tabnew<cr>
+"map <leader>to :tabonly<cr>
+"map <leader>tc :tabclose<cr>
+"map <leader>tm :tabmove
+"
+"" Opens a new tab with the current buffer's path
+"" Super useful when editing files in the same directory
+"map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 "" Set working directory
-nnoremap <leader>. :lcd %:p:h<CR>
+noremap <leader>. :lcd %:p:h<CR>
 
 "" Opens an edit command with the path of the currently edited file filled in
-noremap <Leader>e :e <C-R>=expand("%:p:h") . "/"<CR>
+noremap <leader>e :e <C-R>=expand("%:p:h") . "/"<CR>
 
 "" Opens a tab edit command with the path of the currently edited file filled
-noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/"<CR>
+noremap <leader>te :tabe <C-R>=expand("%:p:h") . "/"<CR>
 
 "" fzf.vim
 set wildmode=list:longest,list:full
@@ -322,26 +270,9 @@ if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
 endif
 
-" ripgrep
-if executable('rg')
-  let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
-  set grepprg=rg\ --vimgrep
-  command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-endif
-
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>e :FZF -m<CR>
-
-" snippets
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-let g:UltiSnipsEditSplit="vertical"
-
-"" Tagbar
-"nmap <silent> <F4> :TagbarToggle<CR>
-"let g:tagbar_autofocus = 1
 
 
 """""""""""""""""""""""""""""""""""""""
@@ -361,120 +292,7 @@ cnoreabbrev Qall qall
 
 
 "*****************************************************************************
-"" CTags and CScope
-"*****************************************************************************
-" CTags
-set tags=tags;
-if version >= 500
-func! Sts( )
-	let st = expand("<cword>")
-	exe "sts ".st
-endfunc
-nmap ,st :call Sts( )<cr>
-
-func! Tj( )
-	let st = expand("<cword>")
-	exe "tj ".st
-endfunc
-nmap ,tj :call Tj( )<cr>
-
-"Cscope
-
-"Man page for C language
-func! Man()
-	let sm = expand("<cword>")
-	exe "!man -S 2:3:4:5:6:7:8:9:tcl:n:l:p:o ".sm
-endfunc
-nmap <leader>ma :call Man()<cr><cr>
-
-endif
-
-
-"*****************************************************************************
-"" Language-specific custom configs
-"*****************************************************************************
-
-" c
-autocmd FileType c setlocal tabstop=4 shiftwidth=4 expandtab
-autocmd FileType cpp setlocal tabstop=4 shiftwidth=4 expandtab
-
-
-" go
-" vim-go
-" run :GoBuild or :GoTestCompile based on the go file
-function! s:build_go_files()
-  let l:file = expand('%')
-  if l:file =~# '^\f\+_test\.go$'
-    call go#test#Test(0, 1)
-  elseif l:file =~# '^\f\+\.go$'
-    call go#cmd#Build(0)
-  endif
-endfunction
-
-let g:go_list_type = "quickfix"
-let g:go_fmt_command = "goimports"
-let g:go_fmt_fail_silently = 1
-let g:syntastic_go_checkers = ['golint', 'govet']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'tcl', 'fortran'] }
-
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_generate_tags = 1
-let g:go_highlight_space_tab_error = 0
-let g:go_highlight_array_whitespace_error = 0
-let g:go_highlight_trailing_whitespace_error = 0
-let g:go_highlight_extra_types = 1
-
-autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
-
-augroup completion_preview_close
-  autocmd!
-  if v:version > 703 || v:version == 703 && has('patch598')
-    autocmd CompleteDone * if !&previewwindow && &completeopt =~ 'preview' | silent! pclose | endif
-  endif
-augroup END
-
-augroup go
-  au!
-  au Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-  au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-  au Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-  au Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
-
-  au FileType go nmap <Leader>dd <Plug>(go-def-vertical)
-  au FileType go nmap <Leader>dv <Plug>(go-doc-vertical)
-  au FileType go nmap <Leader>db <Plug>(go-doc-browser)
-
-  au FileType go nmap <leader>r  <Plug>(go-run)
-  au FileType go nmap <leader>t  <Plug>(go-test)
-  au FileType go nmap <Leader>gt <Plug>(go-coverage-toggle)
-  au FileType go nmap <Leader>i <Plug>(go-info)
-  au FileType go nmap <silent> <Leader>l <Plug>(go-metalinter)
-  au FileType go nmap <C-g> :GoDecls<cr>
-  au FileType go nmap <leader>dr :GoDeclsDir<cr>
-  au FileType go imap <C-g> <esc>:<C-u>GoDecls<cr>
-  au FileType go imap <leader>dr <esc>:<C-u>GoDeclsDir<cr>
-  au FileType go nmap <leader>rb :<C-u>call <SID>build_go_files()<CR>
-augroup END
-
-
-" python
-" vim-python
-augroup vimrc-python
-  autocmd!
-  autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=79
-      \ formatoptions+=croq softtabstop=4
-      \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
-augroup END
-
-
-"*****************************************************************************
-"" Functions
+"" Autocmd Rules
 "*****************************************************************************
 if !exists('*s:setupWrapping')
   function s:setupWrapping()
@@ -484,14 +302,12 @@ if !exists('*s:setupWrapping')
   endfunction
 endif
 
-
-"*****************************************************************************
-"" Autocmd Rules
-"*****************************************************************************
-"" The PC is fast enough, do syntax highlight syncing from start unless 200 lines
-augroup vimrc-sync-fromstart
+"" txt
+augroup vimrc-wrapping
   autocmd!
-  autocmd BufEnter * :syntax sync maxlines=200
+  autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
+  autocmd BufRead,BufNewFile *.md set wrap
+  autocmd BufRead,BufNewFile *.tex set wrap
 augroup END
 
 "" Remember cursor position
@@ -499,21 +315,6 @@ augroup vimrc-remember-cursor-position
   autocmd!
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
-
-"" txt
-augroup vimrc-wrapping
-  autocmd!
-  autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
-augroup END
-
-"" make/cmake
-augroup vimrc-make-cmake
-  autocmd!
-  autocmd FileType make setlocal noexpandtab
-  autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
-augroup END
-
-set autoread
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Plugin Settings
@@ -524,40 +325,14 @@ set autoread
 """""""""""""""""""""""""""""""""""""""
 let g:airline_theme = 'minimalist'
 "let g:airline_theme = 'molokai'
-let g:airline#extensions#tabline#left_sep=' '
-let g:airline#extensions#tabline#left_alt_sep='|'
 
 let g:airline#extensions#syntastic#enabled = 1
-let g:airline#extensions#branch#enabled = 1
+"let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
-"let g:airline#extensions#tagbar#enabled = 1
 let g:airline_skip_empty_sections = 1
-
 let g:airline_highlighting_cache = 1
 
-"let g:airline#extensions#virtualenv#enabled = 1
-
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline_left_sep          = '|'
-let g:airline_left_alt_sep      = '|'
-let g:airline_right_sep         = '|'
-let g:airline_right_alt_sep     = '|'
-let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
-let g:airline#extensions#readonly#symbol   = '⊘'
-let g:airline#extensions#linecolumn#prefix = '¶'
-let g:airline#extensions#paste#symbol      = 'ρ'
-let g:airline_symbols.linenr    = '␊'
-let g:airline_symbols.branch    = '⎇'
-let g:airline_symbols.paste     = 'ρ'
-let g:airline_symbols.paste     = 'Þ'
-let g:airline_symbols.paste     = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
 
 """"""""""""""""""""""""""""""""""""""
 " Syntastic
@@ -574,10 +349,11 @@ let g:syntastic_aggregate_errors = 1
 " syntastic
 let g:syntastic_python_checkers=['python', 'flake8']
 
+
 """""""""""""""""""""""""""""""""""""""
 "" YCM
 """""""""""""""""""""""""""""""""""""""
-let g:ycm_global_ycm_extra_conf = './.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_key_list_select_completion = ['<TAB>']
 let g:ycm_key_list_previous_completion = ['<S-TAB>']
@@ -585,6 +361,7 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_error_symbol = '>'
 let g:ycm_warning_symbol = '*'
 let g:ycm_key_invoke_completion = '<C-1>'
+let g:ycm_complete_in_comments = 1
 
 nnoremap <leader>yg :YcmCompleter GoTo<cr>
 " nnoremap gg :YcmCompleter GoToImprecise
@@ -593,6 +370,17 @@ nnoremap <leader>yf :YcmCompleter GoToDefinition<cr>
 nnoremap <leader>yt :YcmCompleter GetType<cr>
 nnoremap <leader>yp :YcmCompleter GetParent<cr>
 nnoremap <leader>yc :YcmForceCompileAndDiagnostics<CR>
+
+
+"""""""""""""""""""""""""""""""""""""""
+" snippets
+"""""""""""""""""""""""""""""""""""""""
+let g:UltiSnipsExpandTrigger="<c-e>"
+" let g:UltiSnipsListSnippets                <c-tab>
+" let g:UltiSnipsJumpForwardTrigger          <c-j>
+" let g:UltiSnipsJumpBackwardTrigger         <c-k>
+let g:UltiSnipsEditSplit="vertical"
+
 
 """""""""""""""""""""""""""""""""""""""
 "" NERDTree configuration
@@ -606,31 +394,15 @@ let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
 let g:NERDTreeWinSize = 50
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 
-"""""""""""""""""""""""""""""""""""""""
-" grep.vim
-"""""""""""""""""""""""""""""""""""""""
-nnoremap <silent> <leader>f :Rgrep<CR>
-let Grep_Default_Options = '-IR'
-let Grep_Skip_Files = '*.log *.db'
-let Grep_Skip_Dirs = '.git node_modules'
 
 """""""""""""""""""""""""""""""""""""""
-" vimshell.vim
+"" Polyglot
 """""""""""""""""""""""""""""""""""""""
-let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-let g:vimshell_prompt =  '$ '
+let g:polyglot_disabled = ['python', 'latex']
 
-"""""""""""""""""""""""""""""""""""""""
-" terminal emulation
-"""""""""""""""""""""""""""""""""""""""
-nnoremap <silent> <leader>sh :VimShellCreate<CR>
-
-"""""""""""""""""""""""""""""""""""""""
-" Polyglot
-"""""""""""""""""""""""""""""""""""""""
-let g:polyglot_disabled = ['latex']
-let g:indentLine_fileTypeExclude = ['latex', 'tex']
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Custom Functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""
 " vimtex
@@ -640,12 +412,11 @@ let g:indentLine_fileTypeExclude = ['latex', 'tex']
 "endif
 
 """"""""""""""""""""""""""""""""""""""
-" New file header
+" New file skeleton
 """"""""""""""""""""""""""""""""""""""
 let template_dir = expand(vim_file_path . 'templates/')
 let $C_HEADER_TXT = expand(template_dir . 'c_header.txt')
 let $PY_HEADER_TXT = expand(template_dir . 'py_header.txt')
-let $DOXYGEN_CPP_TXT = expand(template_dir . 'doxygen_cpp.txt')
 
 func! NewFileC(ext)
     let fname = expand("%:t:r") . a:ext
@@ -654,7 +425,6 @@ func! NewFileC(ext)
     exe ":1,6s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
     exe ":1,6s/CREATE_DATE/".strftime("%c")
 endfunc
-
 func! NewFilePython()
     let fname = expand("%:t:r") . ".py"
     silent! 0r $PY_HEADER_TXT
@@ -662,21 +432,6 @@ func! NewFilePython()
     exe ":1,7s/CREATE_DATE/".strftime("%c")
     exe ":1,7s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
 endfunc
-
-"" Doxygen Related
-func! InsertDoxygenClass()
-    silent! r! sed -n 1,7p $DOXYGEN_CPP_TXT
-    exe ":-6"
-    exe ":,+6s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
-    exe ":+1"
-endfunc
-
-func! InsertDoxygenFunction()
-    silent! r! sed -n 8,12p $DOXYGEN_CPP_TXT
-    exe ":-5"
-    exe ":,+5s/LAST_MODIFIED/".strftime("%Y-%m-%d %H:%M:%S")
-endfunc
-
 func! UpdateLastModified()
     if (&ft=='c' || &ft=='C' || &ft=='cpp' || &ft=='h')
         exe ":1,7s/@date.*/@date    " .strftime("%Y-%m-%d %H:%M:%S")
@@ -685,11 +440,6 @@ func! UpdateLastModified()
         exe ":1,7s/Last modified  :.*/Last modified  : " .strftime("%Y-%m-%d %H:%M:%S")
     endif
 endfunc
-
-func! UpdateDoxygenDate()
-    exe ":,s/@date.*/@date   " .strftime("%Y-%m-%d %H:%M:%S")
-endfunc
-
 func! UpdateLastModifiedAndQuit()
     exe UpdateLastModified()
     exe ":wq!"
@@ -706,7 +456,32 @@ autocmd BufNewFile *.cpp call NewFileC(".cpp")
 autocmd BufNewFile *.h   call NewFileC(".h")
 autocmd BufNewFile *.py  call NewFilePython()
 
-set wrap
+
+"""""""""""""""""""""""""""""""""""""""
+"" CTags and CScope
+"""""""""""""""""""""""""""""""""""""""
+set tags=tags;
+if version >= 500
+    func! Sts( )
+        let st = expand("<cword>")
+        exe "sts ".st
+    endfunc
+    nmap ,st :call Sts( )<cr>
+
+    func! Tj( )
+        let st = expand("<cword>")
+        exe "tj ".st
+    endfunc
+    nmap ,tj :call Tj( )<cr>
+
+    "Man page for C language
+    func! Man()
+        let sm = expand("<cword>")
+        exe "!man -S 2:3:4:5:6:7:8:9:tcl:n:l:p:o ".sm
+    endfunc
+    nmap <leader>ma :call Man()<cr><cr>
+endif
+
 func! TrimWhitespace()
     let l:save = winsaveview()
     %s/\s\+$//e
@@ -714,3 +489,4 @@ func! TrimWhitespace()
 endfun
 command! TrimWhitespace call TrimWhitespace()
 nmap <leader>tw :call TrimWhitespace()<cr><cr>
+
