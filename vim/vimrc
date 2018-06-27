@@ -409,10 +409,16 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 """""""""""""""""""""""""""""""""""""""
 let g:polyglot_disabled = ['python', 'latex']
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Custom Functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""
+" vimtex
+"""""""""""""""""""""""""""""""""""""""
+"if empty(v:servername) && exists('*remote_startserver')
+"    call remote_startserver('VIM')
+"endif
 
 """"""""""""""""""""""""""""""""""""""
 " New file skeleton
