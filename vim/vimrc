@@ -128,6 +128,14 @@ else
     autocmd BufWinEnter *.* silent loadview
 endif
 
+if has('win32')
+    set guifont=Consolas:h12   " Win32.
+elseif has('gui_macvim')
+    set guifont=IBM\ Plex\ Mono:h12,Monaco:h12
+else
+    set guifont=Monospace\ 12  " Linux.
+endif
+
 """""""""""""""""""""""""""""""""""""""
 "" Visual Settings
 """""""""""""""""""""""""""""""""""""""
