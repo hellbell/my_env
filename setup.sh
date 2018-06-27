@@ -15,6 +15,7 @@ cd $CURDIR
 
 # OSX-specific .gitignore
 curl https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.gitignore -o ~/.gitignore
+git config --global core.excludesfile ~/.gitignore
 
 # Install IBM Plex font
 cd ~/Downloads
