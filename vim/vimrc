@@ -372,6 +372,7 @@ nnoremap <leader>yt :YcmCompleter GetType<cr>
 nnoremap <leader>yp :YcmCompleter GetParent<cr>
 nnoremap <leader>yc :YcmForceCompileAndDiagnostics<CR>
 
+
 """""""""""""""""""""""""""""""""""""""
 " vimtex
 """""""""""""""""""""""""""""""""""""""
@@ -380,6 +381,11 @@ if !exists('g:ycm_semantic_triggers')
     let g:ycm_semantic_triggers = {}
 endif
 let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
+
+if empty(v:servername) && exists('*remote_startserver')
+    call remote_startserver('VIM')
+endif
+
 
 """""""""""""""""""""""""""""""""""""""
 " snippets
@@ -412,13 +418,6 @@ let g:polyglot_disabled = ['python', 'latex']
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Custom Functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"""""""""""""""""""""""""""""""""""""""
-" vimtex
-"""""""""""""""""""""""""""""""""""""""
-"if empty(v:servername) && exists('*remote_startserver')
-"    call remote_startserver('VIM')
-"endif
 
 """"""""""""""""""""""""""""""""""""""
 " New file skeleton
