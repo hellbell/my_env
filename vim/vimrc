@@ -629,9 +629,15 @@ nnoremap <silent> <leader>sh :VimShellCreate<CR>
 " Polyglot
 """""""""""""""""""""""""""""""""""""""
 let g:polyglot_disabled = ['latex']
-
 let g:indentLine_fileTypeExclude = ['latex', 'tex']
 
+
+"""""""""""""""""""""""""""""""""""""""
+" vimtex
+"""""""""""""""""""""""""""""""""""""""
+"if empty(v:servername) && exists('*remote_startserver')
+"    call remote_startserver('VIM')
+"endif
 
 """"""""""""""""""""""""""""""""""""""
 " New file header
