@@ -13,6 +13,9 @@ echo "source ${CURDIR}/vim/vimrc" >> ~/.vimrc
 
 cd $CURDIR
 
+# OSX-specific .gitignore
+curl https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.gitignore -o ~/.gitignore
+
 # Install IBM Plex font
 cd ~/Downloads
 curl -LO https://github.com/IBM/plex/releases/download/v1.0.2/TrueType.zip
