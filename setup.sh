@@ -12,3 +12,11 @@ echo "set runtimepath+=${CURDIR}/vim" > ~/.vimrc
 echo "source ${CURDIR}/vim/vimrc" >> ~/.vimrc
 
 cd $CURDIR
+
+# Install IBM Plex font
+cd ~/Downloads
+curl -LO https://github.com/IBM/plex/releases/download/v1.0.2/TrueType.zip
+unzip TrueType.zip; cd ~/Downloads/TrueType;
+find . -name '*.ttf' -exec mv {} ~/Library/Fonts \;
+cd ~/Downloads; rm -rf TrueType.zip TrueType
+
