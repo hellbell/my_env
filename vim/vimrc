@@ -1,7 +1,7 @@
 """"""""""""""""""""""""""""""""""""""
 " Author: Jinwook Jung
 " Email : jinwookjungs@gmail.com
-" Last modification: Mon Jun 18 16:53:41 KST 2018
+" Last modification: Wed Jun 27 12:35:19 KST 2018
 "
 " Guided by vim-bootstrap: https://github.com/avelino/vim-bootstrap
 " Change your ~/.vimrc as follows:
@@ -86,6 +86,7 @@ set fileencodings=utf-8
 set ttyfast                     " Smoother scroll
 set lazyredraw                  " buffer screen updates instead of updating all the time. 
 set backspace=indent,eol,start  " Fix backspace over indent, line breaks
+set hidden                      " Enable hidden buffers
 
 "" Tabs. May be overriten by autocmd rules
 set tabstop=4                   " number of spaces of tab character
@@ -93,16 +94,13 @@ set softtabstop=4
 set shiftwidth=4                " number of spaces to (auto)indent
 set expandtab
 
-set hidden                      " Enable hidden buffers
-
 "" Searching
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
 
-""" Directories for swp files
-set nobackup
+set nobackup                    " Disable swap files.
 set noswapfile
 
 set fileformats=unix,dos,mac
@@ -120,6 +118,15 @@ set showmatch   " Show matching brackets.
 set ttimeoutlen=50
 set history=700
 set autoread
+
+if has("gui_running")
+    " Set the cursorline
+    set cursorline
+else
+    " Save state on all files of vim
+    autocmd BufWinLeave *.* mkview
+    autocmd BufWinEnter *.* silent loadview
+endif
 
 """""""""""""""""""""""""""""""""""""""
 "" Visual Settings
@@ -189,16 +196,9 @@ endif
 let mapleader=','
 let maplocalleader="\<space>"
 
-"" Spell Checking
-map <leader>ss :setlocal spell!<cr>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
-
 "" Split
-noremap <leader>h :<C-u>split<cr>
-noremap <leader>v :<C-u>vsplit<cr>
+noremap <leader>h :sp<cr>
+noremap <leader>v :vsp<cr>
 noremap <space>w :w<cr>
 
 " Buffer navigation
@@ -216,7 +216,6 @@ noremap <leader>x :bn!<cr>
 noremap <leader>z :bp!<cr>
 noremap <leader>w :bw!<cr>
 noremap <leader>make :!make<cr>
-noremap <leader>latex :!pdflatex "%:p"<cr>
 
 "" Clean search (highlight)
 nnoremap <silent> <leader><cr> :noh<cr>
@@ -224,8 +223,6 @@ nnoremap <silent> <leader><cr> :noh<cr>
 " Folding
 noremap <F1> v]}zf
 noremap <F2> zo
-autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview
 
 "F1 to F4
 
@@ -234,19 +231,13 @@ nnoremap <silent> <F5> :NERDTreeToggle<cr>
 
 "F9 to F12
 
-"" Git
-noremap <leader>M :Magit<CR>
-noremap <leader>gn :GitGutterNextHunk<CR>
-noremap <leader>gp :GitGutterPrevHunk<CR>
-noremap <leader>gt :GitGutterToggle<CR>
-
 "" Tabs
 nnoremap <silent> <S-t> :tabnew<CR>
 "map <leader>tn :tabnew<cr>
 "map <leader>to :tabonly<cr>
 "map <leader>tc :tabclose<cr>
 "map <leader>tm :tabmove
-"
+
 "" Opens a new tab with the current buffer's path
 "" Super useful when editing files in the same directory
 "map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
@@ -260,20 +251,14 @@ noremap <leader>e :e <C-R>=expand("%:p:h") . "/"<CR>
 "" Opens a tab edit command with the path of the currently edited file filled
 noremap <leader>te :tabe <C-R>=expand("%:p:h") . "/"<CR>
 
-"" fzf.vim
-set wildmode=list:longest,list:full
-set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
-let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
+" Spell Checking
+map <leader>ss :setlocal spell!<cr>
+map <leader>sn ]s
+map <leader>sp [s
+map <leader>sa zg
+map <leader>s? z=
 
-" The Silver Searcher
-if executable('ag')
-  let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
-  set grepprg=ag\ --nogroup\ --nocolor
-endif
-
-cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>e :FZF -m<CR>
 
 
 """""""""""""""""""""""""""""""""""""""
@@ -317,12 +302,13 @@ augroup vimrc-remember-cursor-position
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Plugin Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""
-"" airline
+" vim-airline
 """""""""""""""""""""""""""""""""""""""
 let g:airline_theme = 'minimalist'
 "let g:airline_theme = 'molokai'
@@ -350,9 +336,12 @@ let g:syntastic_aggregate_errors = 1
 " syntastic
 let g:syntastic_python_checkers=['python', 'flake8']
 
+noremap <leader>sr :SyntasticReset<CR>
+noremap <leader>sc :SyntasticCheck<CR>
+
 
 """""""""""""""""""""""""""""""""""""""
-"" YCM
+" YCM
 """""""""""""""""""""""""""""""""""""""
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
@@ -388,7 +377,7 @@ endif
 
 
 """""""""""""""""""""""""""""""""""""""
-" snippets
+" Snippets
 """""""""""""""""""""""""""""""""""""""
 let g:UltiSnipsExpandTrigger="<c-e>"
 " let g:UltiSnipsListSnippets                <c-tab>
@@ -398,7 +387,7 @@ let g:UltiSnipsEditSplit="vertical"
 
 
 """""""""""""""""""""""""""""""""""""""
-"" NERDTree configuration
+" NERDTree configuration
 """""""""""""""""""""""""""""""""""""""
 let g:NERDTreeChDirMode=2
 let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
@@ -411,9 +400,37 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 
 
 """""""""""""""""""""""""""""""""""""""
-"" Polyglot
+" vim-gitgutter and vimagit
+"""""""""""""""""""""""""""""""""""""""
+noremap <leader>M :Magit<CR>
+noremap <leader>gn :GitGutterNextHunk<CR>
+noremap <leader>gp :GitGutterPrevHunk<CR>
+noremap <leader>gt :GitGutterToggle<CR>
+
+
+"""""""""""""""""""""""""""""""""""""""
+" fzf.vim
+"""""""""""""""""""""""""""""""""""""""
+set wildmode=list:longest,list:full
+set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
+let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
+
+" The Silver Searcher
+if executable('ag')
+  let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
+  set grepprg=ag\ --nogroup\ --nocolor
+endif
+
+cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
+nnoremap <silent> <leader>e :FZF -m<CR>
+
+
+"""""""""""""""""""""""""""""""""""""""
+" Polyglot
 """""""""""""""""""""""""""""""""""""""
 let g:polyglot_disabled = ['python', 'latex']
+
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Custom Functions
