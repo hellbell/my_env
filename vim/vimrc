@@ -204,7 +204,12 @@ endif
 let mapleader=','
 let maplocalleader="\<space>"
 
-"" Split
+" Location list
+noremap <leader>lc :lclose<cr>
+noremap <leader>lp :lprevious<cr>
+noremap <leader>ln :lnext<cr>
+
+" Split
 noremap <leader>h :sp<cr>
 noremap <leader>v :vsp<cr>
 noremap <space>w :w<cr>
