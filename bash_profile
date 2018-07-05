@@ -21,6 +21,7 @@ alias peq28='ssh -Y sam28@pequot.kaist.ac.kr'
 alias mon28='ssh -Y sam28@montauk.kaist.ac.kr'
 alias peq='ssh -Y jwjung@pequot.kaist.ac.kr'
 alias mon='ssh -Y jwjung@montauk.kaist.ac.kr'
+alias besb='ssh -p 8022 -Y root@106.253.232.169'
 
 alias make="make -j8"
 alias maked="make -j8 DEBUG=1"

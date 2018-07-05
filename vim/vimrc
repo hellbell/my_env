@@ -148,7 +148,6 @@ let no_buffers_menu=1
 set mousemodel=popup
 set t_Co=256
 set guioptions=egmrti
-set gfn=Monospace\ 10
 
 set autoread        " Update automatically when a file is changed outside
 
@@ -489,9 +488,6 @@ endfunc
 
 nmap <leader>q :call UpdateLastModifiedAndQuit()<cr><cr>
 nmap <leader>ulm :call UpdateLastModified()<cr><cr>
-nmap <leader>dc :call InsertDoxygenClass()<cr><cr>
-nmap <leader>df :call InsertDoxygenFunction()<cr><cr>
-nmap <leader>ufd :call UpdateDoxygenDate()<cr><cr>
 
 autocmd BufNewFile *.c   call NewFileC(".c")
 autocmd BufNewFile *.cpp call NewFileC(".cpp")
