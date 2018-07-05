@@ -381,6 +381,7 @@ nnoremap <leader>yc :YcmForceCompileAndDiagnostics<CR>
 """""""""""""""""""""""""""""""""""""""
 " vimtex
 """""""""""""""""""""""""""""""""""""""
+let g:vimtex_quickfix_open_on_warning = 0
 let g:vimtex_view_method = 'skim'
 if !exists('g:ycm_semantic_triggers')
     let g:ycm_semantic_triggers = {}
