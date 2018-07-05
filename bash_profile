@@ -28,3 +28,7 @@ alias maked="make -j8 DEBUG=1"
 alias maket="make -j8 UNIT_TEST=1"
 
 alias vi='vim --servername vim'
+
+# added by Anaconda3 installer
+#export PATH="/Users/jinwook/anaconda3/bin:$PATH"
+export PATH="$PATH:/Users/jinwook/anaconda3/bin"
