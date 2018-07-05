@@ -131,7 +131,7 @@ endif
 if has('win32')
     set guifont=Consolas:h12   " Win32.
 elseif has('gui_macvim')
-    set guifont=IBM\ Plex\ Mono:h12,Monaco:h12
+    set guifont=IBM\ Plex\ Mono:h14,Monaco:h14
 else
     set guifont=Monospace\ 12  " Linux.
 endif
