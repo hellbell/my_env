@@ -391,6 +391,9 @@ if empty(v:servername) && exists('*remote_startserver')
     call remote_startserver('VIM')
 endif
 
+" Allow math-associated highlighting but suppress all the region-based
+" highlighting
+let g:tex_fast="cmM"
 
 """""""""""""""""""""""""""""""""""""""
 " Snippets
