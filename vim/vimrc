@@ -52,7 +52,6 @@ Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
-"Plug 'majutsushi/tagbar'           THIS MAKES VIM SLOW WHEN OPENING A LARGE FILE
 Plug 'scrooloose/syntastic'
 Plug 'sheerun/vim-polyglot'
 
@@ -70,7 +69,6 @@ endif
 Plug 'honza/vim-snippets'
 
 "Plug 'fatih/vim-go'
-
 call plug#end()
 
 "" Required:
@@ -182,9 +180,6 @@ set bg=dark
 colorscheme jellybeans_modified
 "set cursorline
 ""highlight CursorLine ctermfg=NONE ctermbg=53 cterm=bold
-
-" Parenthesis highlighting
-"autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | hi parens ctermfg=11
 
 if $COLORTERM == 'gnome-terminal'
     set term=gnome-256color
@@ -387,14 +382,16 @@ if !exists('g:ycm_semantic_triggers')
 endif
 let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
 
-if empty(v:servername) && exists('*remote_startserver')
+if !has("gui_running") && empty(v:servername) && exists('*remote_startserver')
     call remote_startserver('VIM')
 endif
 
 " Allow math-associated highlighting but suppress all the region-based
 " highlighting
 let g:tex_fast="cmM"
-let g:tex_no_error=1
+let g:tex_no_error = 1
+let g:vimtex_syntax_enabled = 0
+let g:vimtex_matchparen_enabled = 0
 
 """""""""""""""""""""""""""""""""""""""
 " Snippets
