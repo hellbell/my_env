@@ -16,12 +16,13 @@ export LANG=en_US.UTF-8
 alias ipython='ipython --pylab'
 
 alias cen='ssh -Y jwjung@143.248.174.220'
-alias bil='ssh -Y jwjung@biloxi.kaist.ac.kr'
+alias bil='ssh -p 5919 -Y jwjung@biloxi.kaist.ac.kr'
 alias peq28='ssh -Y sam28@pequot.kaist.ac.kr'
 alias mon28='ssh -Y sam28@montauk.kaist.ac.kr'
 alias peq='ssh -Y jwjung@pequot.kaist.ac.kr'
 alias mon='ssh -Y jwjung@montauk.kaist.ac.kr'
-alias besb='ssh -p 8022 -Y root@106.253.232.171'
+alias besb='ssh -p 5919 -Y jwjung@106.253.232.171'
+alias besbr='ssh -p 5919 -Y root@106.253.232.171'
 
 alias make="make -j8"
 alias maked="make -j8 DEBUG=1"

@@ -394,6 +394,7 @@ endif
 " Allow math-associated highlighting but suppress all the region-based
 " highlighting
 let g:tex_fast="cmM"
+let g:tex_no_error=1
 
 """""""""""""""""""""""""""""""""""""""
 " Snippets
