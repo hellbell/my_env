@@ -31,5 +31,5 @@ alias maket="make -j8 UNIT_TEST=1"
 alias vi='vim'
 
 # added by Anaconda3 installer
-#export PATH="/Users/jinwook/anaconda3/bin:$PATH"
+alias enable_conda='export PATH="/Users/jinwook/anaconda3/bin:$PATH"'
 export PATH="$PATH:/Users/jinwook/anaconda3/bin"
