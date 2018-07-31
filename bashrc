@@ -22,8 +22,12 @@ alias make='make -j8'
 alias maked='make -j8 DEBUG=1'
 alias maket='make -j8 TEST=1'
 
+export PATH="/usr/local/git/bin:$PATH"
 
 #------------------------------------------------------------------------------
 # Local aliases
 #------------------------------------------------------------------------------
 
+
+# added by Anaconda3 installer
+alias enable_conda='export PATH="/home/jwjung/anaconda3/bin:$PATH"'
