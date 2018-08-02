@@ -382,11 +382,9 @@ if !exists('g:ycm_semantic_triggers')
 endif
 let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
 
-if has("macunix")
-    if has('clientserver') && empty(v:servername) && exists('*remote_startserver')
-        if !has("gui_running")
-            call remote_startserver('VIM')
-        endif
+if has("maxunix")
+    if !has("gui_running") && has('clientserver') && empty(v:servername) && exists('*remote_startserver')
+        call remote_startserver('VIM')
     endif
 endif
 
