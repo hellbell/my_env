@@ -251,7 +251,7 @@ nnoremap <silent> <S-t> :tabnew<CR>
 "map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 "" Set working directory
-noremap <leader>. :lcd %:p:h<CR>
+noremap <leader>. :cd %:p:h<CR>
 
 "" Opens an edit command with the path of the currently edited file filled in
 noremap <leader>e :e <C-R>=expand("%:p:h") . "/"<CR>
@@ -344,7 +344,7 @@ let g:syntastic_aggregate_errors = 1
 " syntastic
 let g:syntastic_python_checkers=['python', 'flake8']
 let g:syntastic_mode_map = {
-    \ "mode": "active",
+    \ "mode": "passive",
     \ "passive_filetypes": ["tcl", "fortran", "go"] }
 
 noremap <leader>sr :SyntasticReset<CR>
