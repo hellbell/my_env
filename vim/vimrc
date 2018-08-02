@@ -52,7 +52,6 @@ Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
-"Plug 'majutsushi/tagbar'           THIS MAKES VIM SLOW WHEN OPENING A LARGE FILE
 Plug 'scrooloose/syntastic'
 Plug 'sheerun/vim-polyglot'
 
@@ -70,7 +69,6 @@ endif
 Plug 'honza/vim-snippets'
 
 "Plug 'fatih/vim-go'
-
 call plug#end()
 
 "" Required:
@@ -148,7 +146,6 @@ let no_buffers_menu=1
 set mousemodel=popup
 set t_Co=256
 set guioptions=egmrti
-set gfn=Monospace\ 10
 
 set autoread        " Update automatically when a file is changed outside
 
@@ -184,9 +181,6 @@ colorscheme jellybeans_modified
 "set cursorline
 ""highlight CursorLine ctermfg=NONE ctermbg=53 cterm=bold
 
-" Parenthesis highlighting
-"autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | hi parens ctermfg=11
-
 if $COLORTERM == 'gnome-terminal'
     set term=gnome-256color
 elseif $TERM == 'xterm'
@@ -204,7 +198,12 @@ endif
 let mapleader=','
 let maplocalleader="\<space>"
 
-"" Split
+" Location list
+noremap <leader>lc :lclose<cr>
+noremap <leader>lp :lprevious<cr>
+noremap <leader>ln :lnext<cr>
+
+" Split
 noremap <leader>h :sp<cr>
 noremap <leader>v :vsp<cr>
 noremap <space>w :w<cr>
@@ -376,16 +375,23 @@ nnoremap <leader>yc :YcmForceCompileAndDiagnostics<CR>
 """""""""""""""""""""""""""""""""""""""
 " vimtex
 """""""""""""""""""""""""""""""""""""""
+let g:vimtex_quickfix_open_on_warning = 0
 let g:vimtex_view_method = 'skim'
 if !exists('g:ycm_semantic_triggers')
     let g:ycm_semantic_triggers = {}
 endif
 let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
 
-"if empty(v:servername) && exists('*remote_startserver')
-"    call remote_startserver('VIM')
-"endif
+if !has("gui_running") && has('clientserver') && empty(v:servername) && exists('*remote_startserver')
+    call remote_startserver('VIM')
+endif
 
+" Allow math-associated highlighting but suppress all the region-based
+" highlighting
+let g:tex_fast="cmM"
+let g:tex_no_error = 1
+let g:vimtex_syntax_enabled = 0
+let g:vimtex_matchparen_enabled = 0
 
 """""""""""""""""""""""""""""""""""""""
 " Snippets
@@ -483,9 +489,6 @@ endfunc
 
 nmap <leader>q :call UpdateLastModifiedAndQuit()<cr><cr>
 nmap <leader>ulm :call UpdateLastModified()<cr><cr>
-nmap <leader>dc :call InsertDoxygenClass()<cr><cr>
-nmap <leader>df :call InsertDoxygenFunction()<cr><cr>
-nmap <leader>ufd :call UpdateDoxygenDate()<cr><cr>
 
 autocmd BufNewFile *.c   call NewFileC(".c")
 autocmd BufNewFile *.cpp call NewFileC(".cpp")
