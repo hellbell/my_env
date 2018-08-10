@@ -139,6 +139,8 @@ endif
 "" Visual Settings
 """""""""""""""""""""""""""""""""""""""
 syntax on
+autocmd BufEnter *.md :syntax sync minlines=30
+
 set ruler       " Show current position
 set number
 
